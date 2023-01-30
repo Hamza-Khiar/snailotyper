@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "watch:scss": "sass -w src/stylesheets/scss:src/stylesheets/css"
   },
   "dependencies": {
     "react": "^18.2.0",
