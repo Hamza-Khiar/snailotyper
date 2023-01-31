@@ -1,4 +1,3 @@
-
 class Typer {
   /**
    * there are gonna be different functions for different utilities:
@@ -7,8 +6,13 @@ class Typer {
    *    start = after text generates it listens if any keystroke are entered
    *    typingWatcher = this is the one who'll watch all the correct words and corrected characters
    *    result = taking data that's returned in 'typingWatcher' it will be mapped out in a graph
+   *
    */
-
+  public textGenerator(words: string[]) {
+    
+    // call a private function
+    return null;
+  }
 }
 
 export default Typer;
