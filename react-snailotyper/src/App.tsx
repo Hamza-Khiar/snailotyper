@@ -1,4 +1,5 @@
 import "./stylesheets/css/App.css";
+import { Test } from "./components/TestComp";
 
 function App() {
   return (
@@ -16,11 +17,7 @@ function App() {
       </nav>
       <div id="main-middle">
         <h1>SnailType your way to a blazingly fast typer</h1>
-        <div className="flex-layout--nav">
-          <ul className="test-param--type"></ul>
-          <ul className="test-param--metrics"></ul>
-        </div>
-        <div id="test-subject-typer"></div>
+        <Test />
       </div>
     </div>
   );

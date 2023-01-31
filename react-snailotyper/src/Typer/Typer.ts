@@ -8,10 +8,14 @@ class Typer {
    *    result = taking data that's returned in 'typingWatcher' it will be mapped out in a graph
    *
    */
-  public textGenerator(words: string[]) {
-    
-    // call a private function
-    return null;
+  public textGenerator(/* wordsToGen: number, */ file: string) {
+    let words = this.Fetcher(file);
+    return words;
+  }
+
+  private async Fetcher(file: string) {
+    let response = await fetch(file);
+    return await response.text();
   }
 }
 
