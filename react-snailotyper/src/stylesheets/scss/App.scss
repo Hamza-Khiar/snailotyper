@@ -5,3 +5,33 @@
     background-color: aliceblue;
   }
 }
+.App-header-nav {
+  display: flex;
+  justify-content: space-between;
+  margin: 3% auto 5% auto;
+  width: 80%;
+  > ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+  }
+}
+#main-middle {
+  display: grid;
+  > h1 {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+  .flex-layout--nav {
+    display: flex;
+    justify-self: center;
+    margin: 2em;
+    justify-content: space-around;
+    width: 100%;
+    ul {
+      display: inherit;
+      list-style: none;
+      gap: 1rem;
+    }
+  }
+}

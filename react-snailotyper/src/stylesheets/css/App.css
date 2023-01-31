@@ -2,9 +2,40 @@
   padding: 0;
   margin: 0;
 }
-
-.App {
+* body {
   background-color: aliceblue;
+}
+
+.App-header-nav {
+  display: flex;
+  justify-content: space-between;
+  margin: 3% auto 5% auto;
+  width: 80%;
+}
+.App-header-nav > ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+#main-middle {
+  display: grid;
+}
+#main-middle > h1 {
+  font-size: 2.5rem;
+  text-align: center;
+}
+#main-middle .flex-layout--nav {
+  display: flex;
+  justify-self: center;
+  margin: 2em;
+  justify-content: space-around;
+  width: 100%;
+}
+#main-middle .flex-layout--nav ul {
+  display: inherit;
+  list-style: none;
+  gap: 1rem;
 }
 
 /*# sourceMappingURL=App.css.map */
