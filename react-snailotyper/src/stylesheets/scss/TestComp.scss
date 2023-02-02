@@ -5,5 +5,16 @@
   justify-self: center;
   font-size: x-large;
   line-height: 30px;
-  gap: 0.5em;
+  #caret {
+    width: 3px;
+    height: 2ex;
+    left: 4px;
+    font-size: 1em;
+    top: -3px;
+    position: relative;
+    background-color: black;
+  }
+  .word {
+    margin: 0 0.2em;
+  }
 }

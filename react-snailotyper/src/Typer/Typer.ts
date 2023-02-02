@@ -8,28 +8,28 @@ class Typer {
    *    result = taking data that's returned in 'typingWatcher' it will be mapped out in a graph
    *
    */
-  public textGenerator(wordsToGen: number, file: string) {
-    let words = this.Fetcher(file);
-    this.wordShuffler(words, wordsToGen);
+  public async textGenerator(wordsToGen: number, file: string) {
+    let words = await this.Fetcher(file);
+    words = this.wordShuffler(words, wordsToGen);
     return words;
   }
 
   private async Fetcher(file: string) {
     let response = await fetch(file);
-    return response.json();
+    let words = await response.json();
+    words = words.words;
+    return words;
   }
-  private async wordShuffler(words: any, wordsToGen: number) {
-    await words;
+  private wordShuffler(words: any, wordsToGen: number) {
     const MIN = 0;
     const MAX = 999;
     let wordsGenerated: string[] = [];
     let i = Math.ceil(Math.random() * (MAX - MIN));
     do {
+      i = Math.ceil(Math.random() * (MAX - MIN));
       wordsGenerated.push(words[i]);
     } while (wordsGenerated.length !== wordsToGen);
-    console.log(wordsGenerated);
-
-    return words;
+    return wordsGenerated;
   }
 }
 

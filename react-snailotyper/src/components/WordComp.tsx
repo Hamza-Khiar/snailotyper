@@ -5,12 +5,13 @@
 
 import { typer } from "./TestComp";
 
+typer.start()
 export function WordComp({ words }: any) {
   let mappedWord = words.map((word: string, index: number) => {
     return (
-      <span key={index} className="word">
+      <div key={index} className="word">
         {word}
-      </span>
+      </div>
     );
   });
 

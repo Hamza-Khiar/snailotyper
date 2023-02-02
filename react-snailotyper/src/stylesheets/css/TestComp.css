@@ -5,7 +5,18 @@
   justify-self: center;
   font-size: x-large;
   line-height: 30px;
-  gap: 0.5em;
+}
+#test-subject-typer #caret {
+  width: 3px;
+  height: 2ex;
+  left: 4px;
+  font-size: 1em;
+  top: -3px;
+  position: relative;
+  background-color: black;
+}
+#test-subject-typer .word {
+  margin: 0 0.2em;
 }
 
 /*# sourceMappingURL=TestComp.css.map */

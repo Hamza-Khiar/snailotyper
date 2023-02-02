@@ -12,8 +12,7 @@ const SECONDS: number[] = [15, 30, 60, 120];
 const WORD_NUMBERS: number[] = [10, 25, 50, 100];
 
 export let typer = new Typer();
-let WordsFetched = await typer.textGenerator(10, "src/assets/words.json");
-WordsFetched = WordsFetched.words;
+let WordsFetched = await typer.textGenerator(50, "src/assets/words.json");
 
 export function Test() {
   return (
@@ -23,6 +22,7 @@ export function Test() {
         <ul className="test-param--metrics"></ul>
       </div>
       <div id="test-subject-typer">
+        <div id="caret"></div>
         <WordComp words={WordsFetched} />
       </div>
     </>
