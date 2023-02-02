@@ -31,6 +31,11 @@ class Typer {
     } while (wordsGenerated.length !== wordsToGen);
     return wordsGenerated;
   }
+  public start() {
+    /**
+     * this will detect the keypress and start a timer while calling typing watcher
+     */
+  }
 }
 
 export default Typer;
