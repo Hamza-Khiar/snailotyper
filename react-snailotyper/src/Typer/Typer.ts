@@ -16,13 +16,20 @@ class Typer {
 
   private async Fetcher(file: string) {
     let response = await fetch(file);
-    return await response.json();
+    return response.json();
   }
-  private async wordShuffler(words: Promise<string>, wordsToGen: number) {
+  private async wordShuffler(words: any, wordsToGen: number) {
     await words;
-    let interval;
-    
-    return null;
+    const MIN = 0;
+    const MAX = 999;
+    let wordsGenerated: string[] = [];
+    let i = Math.ceil(Math.random() * (MAX - MIN));
+    do {
+      wordsGenerated.push(words[i]);
+    } while (wordsGenerated.length !== wordsToGen);
+    console.log(wordsGenerated);
+
+    return words;
   }
 }
 

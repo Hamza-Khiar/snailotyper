@@ -7,7 +7,11 @@ import { typer } from "./TestComp";
 
 export function WordComp({ words }: any) {
   let mappedWord = words.map((word: string, index: number) => {
-    return <span className="word">{word}</span>;
+    return (
+      <span key={index} className="word">
+        {word}
+      </span>
+    );
   });
 
   return <>{mappedWord}</>;
