@@ -3,7 +3,10 @@ export function NavbarTest() {
   const WORD_NUMBERS: number[] = [10, 25, 50, 100];
   return (
     <div className="flex-layout--nav">
-      <ul className="test-param--type"></ul>
+      <ul className="test-param--type">
+        <li>words</li>
+        <li>time</li>
+      </ul>
       <ul className="test-param--metrics"></ul>
     </div>
   );
