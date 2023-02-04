@@ -7,7 +7,13 @@ export function NavbarTest() {
         <li>words</li>
         <li>time</li>
       </ul>
-      <ul className="test-param--metrics"></ul>
+      <ul className="test-param--metrics">
+        {/**
+         *
+         * so here based on the parameter passed will either be SECONDS or WORD_NUMBERS
+         *
+         */}
+      </ul>
     </div>
   );
 }
