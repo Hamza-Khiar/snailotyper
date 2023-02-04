@@ -3,7 +3,7 @@
  *  displaying words , check if typed word is right by character, check how many errors
  */
 import { Character } from "./CharacterUpdt";
-type word = {
+interface word {
   words: Array<string>;
 };
 
