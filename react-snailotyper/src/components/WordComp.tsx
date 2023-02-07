@@ -5,7 +5,7 @@
 import { Character } from "./CharacterUpdt";
 interface word {
   words: Array<string>;
-};
+}
 
 export function WordComp({ words }: word) {
   let mappedWord = words.map((word: string, index: number) => {

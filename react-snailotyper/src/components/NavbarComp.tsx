@@ -3,9 +3,10 @@ import { MouseEvent, MouseEventHandler, useState } from "react";
 interface list<T> {
   list: T[];
   onSetMetricRender?: MouseEventHandler;
+  onGenText?: MouseEventHandler;
 }
 
-export function NavbarTest() {
+export function NavbarTest({ onGenText }: list<any>) {
   const TEST_PARAM_TYPE = ["words", "time"];
 
   const SECONDS: number[] = [15, 30, 60, 120];
@@ -28,7 +29,7 @@ export function NavbarTest() {
         list={TEST_PARAM_TYPE}
         onSetMetricRender={(e) => handlMetricRender(e)}
       />
-      <MetricRenderer list={metric} />
+      <MetricRenderer list={metric} onGenText={onGenText} />
     </div>
   );
 }
@@ -44,9 +45,13 @@ function TypeRenderer({ list, onSetMetricRender }: list<string>) {
   return <ul className="test-param--type">{mappedType}</ul>;
 }
 
-function MetricRenderer({ list }: list<number>) {
+function MetricRenderer({ list, onGenText }: list<number>) {
   let mappedMetrics = list.map((num: number, i: number) => {
-    return <li key={i}>{num}</li>;
+    return (
+      <li key={i} onClick={onGenText}>
+        {num}
+      </li>
+    );
   });
 
   return <ul className="test-param--metrics">{mappedMetrics}</ul>;

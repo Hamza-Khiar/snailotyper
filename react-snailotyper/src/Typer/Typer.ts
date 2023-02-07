@@ -8,7 +8,10 @@ class Typer {
    *    result = taking data that's returned in 'typingWatcher' it will be mapped out in a graph
    *
    */
-  public async textGenerator(wordsToGen: number, file: string) {
+  public async textGenerator(
+    wordsToGen: number,
+    file: string
+  ): Promise<Array<string>> {
     let words = await this.Fetcher(file);
     words = this.wordShuffler(words, wordsToGen);
     return words;
