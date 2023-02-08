@@ -4,23 +4,25 @@ import "../stylesheets/css/TestComp.css";
 import { WordComp } from "./WordComp";
 import { NavbarTest } from "./NavbarComp";
 
+let typer = new Typer();
+let firstFetched = await typer.textGenerator(50);
+
 export function Test() {
-  const [genText, setGenText] = useState<string[]>([]);
-  const [wordsToGen, setWordsToGen] = useState(0);
+  const [wordsToGen, setWordsToGen] = useState(50);
+  const [genText, setGenText] = useState<string[]>(firstFetched);
 
-  let typer = new Typer();
-
-  let WordsFetched = async (num): Promise<string[]> => {
-    return await typer.textGenerator(num, "src/assets/words.json");
+  let wordsFetched = async (num: number) => {
+    let words = await typer.textGenerator(num);
+    return words;
   };
 
-  async function handleGenTextNum(e: MouseEvent) {
-    setWordsToGen(e.target.innerText);
-    return setGenText(await WordsFetched(wordsToGen));
+  async function handleGenTextNum(e) {
+    setWordsToGen(parseInt(e.target.innerText));
+    setGenText(await wordsFetched(wordsToGen));
   }
   return (
     <>
-      <NavbarTest onGenText={handleGenTextNum} list={[]} />
+      <NavbarTest onGenText={(e) => handleGenTextNum(e)} list={[]} />
       <div id="test-subject-typer">
         <div id="caret"></div>
         <WordComp words={genText} />

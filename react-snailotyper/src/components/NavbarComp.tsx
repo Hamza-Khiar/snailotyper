@@ -13,14 +13,14 @@ export function NavbarTest({ onGenText }: list<any>) {
   const WORD_NUMBERS: number[] = [10, 25, 50, 100];
   const [metric, setMetric] = useState(SECONDS);
 
-  //   setting which metric to use
-
   function handlMetricRender(e: MouseEvent) {
     switch (e.target.innerText) {
       case "words":
-        return setMetric(WORD_NUMBERS);
+        setMetric(WORD_NUMBERS);
+        break;
       case "time":
-        return setMetric(SECONDS);
+        setMetric(SECONDS);
+        break;
     }
   }
   return (
