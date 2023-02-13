@@ -4,11 +4,10 @@ import "../stylesheets/css/TestComp.css";
 import { WordComp } from "./WordComp";
 import { NavbarTest } from "./NavbarComp";
 
-let typer = new Typer();
+export let typer = new Typer();
 let firstFetched = await typer.textGenerator(50);
 
 export function Test() {
-  const [wordsToGen, setWordsToGen] = useState(50);
   const [genText, setGenText] = useState<string[]>(firstFetched);
 
   let wordsFetched = async (num: number) => {
@@ -16,9 +15,8 @@ export function Test() {
     return words;
   };
 
-  async function handleGenTextNum(e) {
-    setWordsToGen(parseInt(e.target.innerText));
-    setGenText(await wordsFetched(wordsToGen));
+  async function handleGenTextNum(e: MouseEvent) {
+    setGenText(await wordsFetched(parseInt(e.target.innerText)));
   }
   return (
     <>
@@ -33,8 +31,6 @@ export function Test() {
 
 /**
  * TASKS:
- *    having NavbarTest determine how many words to generate based on what parameter was passed on it
- *    if more than 50% was typed generate and append new words
- * write the start() logic for Typer class
+ * write the start() logic for the Typer class
  *
  * */

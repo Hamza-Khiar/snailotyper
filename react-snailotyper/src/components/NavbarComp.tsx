@@ -6,7 +6,7 @@ interface list<T> {
   onGenText?: MouseEventHandler;
 }
 
-export function NavbarTest({ onGenText }: list<any>) {
+export function NavbarTest({ onGenText }: list<string>) {
   const TEST_PARAM_TYPE = ["words", "time"];
 
   const SECONDS: number[] = [15, 30, 60, 120];

@@ -2,7 +2,7 @@
  *  Purpose of WordComponent
  *  displaying words , check if typed word is right by character, check how many errors
  */
-import { Character } from "./CharacterUpdt";
+import { Character } from "./CharacterComp";
 interface word {
   words: Array<string>;
 }
