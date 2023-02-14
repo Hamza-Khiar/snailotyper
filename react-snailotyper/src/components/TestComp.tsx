@@ -23,14 +23,17 @@ export function Test() {
       <NavbarTest onGenText={(e) => handleGenTextNum(e)} list={[]} />
       <div id="test-subject-typer">
         <div id="caret"></div>
+        <input type="text" id="inputField" />
         <WordComp words={genText} />
       </div>
     </>
   );
 }
 
+
 /**
  * TASKS:
  * write the start() logic for the Typer class
+ *    a keydown event assigned to the document which will fire another event 
  *
  * */

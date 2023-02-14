@@ -34,7 +34,6 @@ class Typer {
     return wordsGenerated;
   }
   public start() {
-    this.typingWatcher();
     /**
      * this will detect the keypress and start a timer while calling typing watcher
      */
