@@ -13,11 +13,13 @@ export function Test() {
   document.addEventListener("keydown", globalTypeSensor);
   function globalTypeSensor(e: KeyboardEvent) {
     /**
-     * this will listen to keyboard, then call the start() method in 
+     * this will listen to keyboard, then call the start() method in
      */
     if (genText) {
       let inp = document.getElementById("inputField");
-      console.log(e.key);
+      inp?.focus();
+      typer.start();
+      // console.log(e.key);
     }
   }
   const [genText, setGenText] = useState<string[]>(firstFetched);
@@ -32,9 +34,14 @@ export function Test() {
   }
   return (
     <>
-      <NavbarTest onGenText={(e) => handleGenTextNum(e)} list={[]} />
+      <NavbarTest
+        onGenText={(e) => handleGenTextNum(e)}
+        onSetTimer={() => console.log(1)}
+        list={[]}
+      />
       <div id="test-subject-typer">
         <div id="caret"></div>
+        <p className="timer"></p>
         <InputTest />
         <WordComp words={genText} />
       </div>

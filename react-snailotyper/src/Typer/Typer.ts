@@ -34,8 +34,22 @@ class Typer {
     return wordsGenerated;
   }
   public start() {
+    // this.timer();
     /**
      * this will detect the keypress and start a timer while calling typing watcher
+     */
+  }
+  private timer() {
+    /**
+     * let timerEl=document.getElementById('timer')
+    let seconds = 120;
+
+    let countDownTimer=function(){
+      timerEl.innerHTML=`${Math.floor(seconds/60)} : ${seconds%60}`
+      seconds--;
+    }
+
+    setInterval(countDownTimer,1000)
      */
   }
   private typingWatcher() {

@@ -4,13 +4,14 @@ interface list<T> {
   list: T[];
   onSetMetricRender?: MouseEventHandler;
   onGenText?: MouseEventHandler;
+  onSetTimer?: MouseEventHandler;
 }
 
-export function NavbarTest({ onGenText }: list<string>) {
-  const TEST_PARAM_TYPE = ["words", "time"];
+const TEST_PARAM_TYPE = ["words", "time"];
+const SECONDS: number[] = [15, 30, 60, 120];
+const WORD_NUMBERS: number[] = [10, 25, 50, 100];
 
-  const SECONDS: number[] = [15, 30, 60, 120];
-  const WORD_NUMBERS: number[] = [10, 25, 50, 100];
+export function NavbarTest({ onGenText, onSetTimer }: list<string>) {
   const [metric, setMetric] = useState(SECONDS);
 
   function handlMetricRender(e: MouseEvent) {
@@ -29,7 +30,11 @@ export function NavbarTest({ onGenText }: list<string>) {
         list={TEST_PARAM_TYPE}
         onSetMetricRender={(e) => handlMetricRender(e)}
       />
-      <MetricRenderer list={metric} onGenText={onGenText} />
+      <MetricRenderer
+        list={metric}
+        onGenText={onGenText}
+        onSetTimer={onSetTimer}
+      />
     </div>
   );
 }
@@ -45,14 +50,25 @@ function TypeRenderer({ list, onSetMetricRender }: list<string>) {
   return <ul className="test-param--type">{mappedType}</ul>;
 }
 
-function MetricRenderer({ list, onGenText }: list<number>) {
-  let mappedMetrics = list.map((num: number, i: number) => {
-    return (
-      <li key={i} onClick={onGenText}>
-        {num}
-      </li>
-    );
-  });
+function MetricRenderer({ list, onGenText, onSetTimer }: list<number>) {
+  let mappedMetrics;
+  if (list === WORD_NUMBERS) {
+    mappedMetrics = list.map((num: number, i: number) => {
+      return (
+        <li key={i} onClick={onGenText}>
+          {num}
+        </li>
+      );
+    });
+  } else if (list === SECONDS) {
+    mappedMetrics = list.map((num: number, i: number) => {
+      return (
+        <li key={i} onClick={onSetTimer}>
+          {num}
+        </li>
+      );
+    });
+  }
 
   return <ul className="test-param--metrics">{mappedMetrics}</ul>;
 }
