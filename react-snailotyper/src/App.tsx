@@ -2,12 +2,6 @@ import "./stylesheets/css/App.css";
 import { Test } from "./components/TestComp";
 
 function App() {
-  document.addEventListener("keydown", globalTypeSensor);
-  function globalTypeSensor(e: KeyboardEvent) {
-    let inp = document.getElementById("inputField");
-    console.log(e.key);
-    // dispatching the event from the Test component , pass the globalEventHandler to the test
-  }
   return (
     <div className="App">
       <nav className="App-header-nav">

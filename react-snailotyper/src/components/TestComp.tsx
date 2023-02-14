@@ -3,11 +3,23 @@ import Typer from "../Typer/Typer";
 import "../stylesheets/css/TestComp.css";
 import { WordComp } from "./WordComp";
 import { NavbarTest } from "./NavbarComp";
+import { InputTest } from "./TestInputComp";
 
 export let typer = new Typer();
+
 let firstFetched = await typer.textGenerator(50);
 
 export function Test() {
+  document.addEventListener("keydown", globalTypeSensor);
+  function globalTypeSensor(e: KeyboardEvent) {
+    /**
+     * this will listen to keyboard, then call the start() method in 
+     */
+    if (genText) {
+      let inp = document.getElementById("inputField");
+      console.log(e.key);
+    }
+  }
   const [genText, setGenText] = useState<string[]>(firstFetched);
 
   let wordsFetched = async (num: number) => {
@@ -23,17 +35,16 @@ export function Test() {
       <NavbarTest onGenText={(e) => handleGenTextNum(e)} list={[]} />
       <div id="test-subject-typer">
         <div id="caret"></div>
-        <input type="text" id="inputField" />
+        <InputTest />
         <WordComp words={genText} />
       </div>
     </>
   );
 }
 
-
 /**
  * TASKS:
  * write the start() logic for the Typer class
- *    a keydown event assigned to the document which will fire another event 
- *
+ *    a keydown event assigned to the document which will fire another event
+ * Fix the issue of if it's Seconds list rendered it shouldn't generate text from the number
  * */
