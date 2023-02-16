@@ -14,9 +14,9 @@ export function Test() {
     /**
      * this will listen to keyboard, then call the start() method in
      */
-    let inp = document.getElementById("inputField");
-    inp?.focus();
-    typer.start();
+    // let inp = document.getElementById("inputField");
+    // inp?.focus();
+    // typer.start();
   }
   document.addEventListener("keypress", globalTypeSensor, { once: true });
 
@@ -60,6 +60,7 @@ export function Test() {
 
 /**
  * TASKS:
+ *
  * write the start() logic for the Typer class
  *    a keydown event assigned to the document which will fire another event
  * */
