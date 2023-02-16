@@ -1,7 +1,7 @@
 #test-subject-typer {
   display: flex;
   flex-wrap: wrap;
-  width: 80%;
+  width: 70%;
   justify-self: center;
   font-size: x-large;
   line-height: 30px;
@@ -10,7 +10,7 @@
     height: 2ex;
     left: 4px;
     font-size: 1em;
-    top: -3px;
+    top: -2.5px;
     position: relative;
     background-color: black;
     animation: tick-infinity 1s cubic-bezier(0.46, 0.03, 0.52, 0.96) infinite;
@@ -29,4 +29,7 @@
   .word {
     margin: 0 0.2em;
   }
+}
+#timer {
+  text-align: center;
 }

@@ -4,8 +4,9 @@
   position: absolute;
   z-index: -1;
   height: 2em;
+  opacity: 0;
   &:focus-visible {
     outline: none;
-    visibility: hidden;
+    opacity: 0;
   }
 }

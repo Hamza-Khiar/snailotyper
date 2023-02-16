@@ -4,10 +4,11 @@
   position: absolute;
   z-index: -1;
   height: 2em;
+  opacity: 0;
 }
 #inputField:focus-visible {
   outline: none;
-  visibility: hidden;
+  opacity: 0;
 }
 
 /*# sourceMappingURL=TestInputComp.css.map */

@@ -10,18 +10,16 @@ export let typer = new Typer();
 let firstFetched = await typer.textGenerator(50);
 
 export function Test() {
-  document.addEventListener("keydown", globalTypeSensor);
   function globalTypeSensor(e: KeyboardEvent) {
     /**
      * this will listen to keyboard, then call the start() method in
      */
-    if (genText) {
-      let inp = document.getElementById("inputField");
-      inp?.focus();
-      typer.start();
-      // console.log(e.key);
-    }
+    let inp = document.getElementById("inputField");
+    inp?.focus();
+    typer.start();
   }
+  document.addEventListener("keypress", globalTypeSensor, { once: true });
+
   const [genText, setGenText] = useState<string[]>(firstFetched);
 
   let wordsFetched = async (num: number) => {
@@ -30,18 +28,29 @@ export function Test() {
   };
 
   async function handleGenTextNum(e: MouseEvent) {
-    setGenText(await wordsFetched(parseInt(e.target.innerText)));
+    let numTextGen = parseInt(e.target.innerText);
+    setGenText(await wordsFetched(numTextGen));
+  }
+  async function handleTimerSet(e: MouseEvent) {
+    let numTextGen = parseInt(e.target.innerText);
+    if (numTextGen >= 60) {
+      let i = Math.floor(numTextGen * 1.5);
+      setGenText(await wordsFetched(i));
+    } else {
+      let i = Math.floor(numTextGen * 2);
+      setGenText(await wordsFetched(i));
+    }
   }
   return (
     <>
       <NavbarTest
         onGenText={(e) => handleGenTextNum(e)}
-        onSetTimer={() => console.log(1)}
+        onSetTimer={(e) => handleTimerSet(e)}
         list={[]}
       />
+      <p id="timer"></p>
       <div id="test-subject-typer">
         <div id="caret"></div>
-        <p className="timer"></p>
         <InputTest />
         <WordComp words={genText} />
       </div>
@@ -53,5 +62,4 @@ export function Test() {
  * TASKS:
  * write the start() logic for the Typer class
  *    a keydown event assigned to the document which will fire another event
- * Fix the issue of if it's Seconds list rendered it shouldn't generate text from the number
  * */
