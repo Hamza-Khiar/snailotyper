@@ -34,21 +34,11 @@ class Typer {
     return wordsGenerated;
   }
   public start() {
-    this.timer();
     /**
      * this will detect the keypress and start a timer while calling typing watcher
      */
   }
-  private timer() {
-    // let timerEl;
-    // let seconds = 120;
-    // let countDownTimer = function () {
-    //   timerEl = `${Math.floor(seconds / 60)} : ${seconds % 60}`;
-    //   seconds--;
-    //   return timerEl;
-    // };
-    // setInterval(countDownTimer, 1000);
-  }
+
   private typingWatcher() {
     //
   }
