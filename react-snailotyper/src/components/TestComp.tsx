@@ -3,7 +3,7 @@ import "../stylesheets/css/TestComp.css";
 import { WordComp } from "./WordComp";
 import { NavbarTest } from "./NavbarComp";
 import { InputTest } from "./TestInputComp";
-import { MetricRender } from "./MetricRenComp";
+import { MetricTracker } from "./MetricRenComp";
 
 import Typer from "../Typer/Typer";
 
@@ -14,13 +14,13 @@ let firstFetched = await typer.textGenerator(50);
 export function Test() {
   function globalTypeSensor(e: KeyboardEvent) {
     setLaunched(true);
-    typer.start();
+    // typer.start();
   }
   document.addEventListener("keypress", globalTypeSensor, { once: true });
 
   const [genText, setGenText] = useState<string[]>(firstFetched);
   const [launched, setLaunched] = useState<boolean>(false);
-  const [timer, setTimer] = useState<number>(0);
+  const [metric, setMetric] = useState<object>({ type: "time", value: 15 });
 
   let wordsFetched = async (num: number) => {
     let words = await typer.textGenerator(num);
@@ -28,12 +28,12 @@ export function Test() {
   };
   async function handleGenTextNum(e: MouseEvent) {
     let numTextGen = parseInt(e.target.innerText);
-    setTimer(numTextGen);
+    setMetric({ type: "words", value: numTextGen });
     setGenText(await wordsFetched(numTextGen));
   }
   async function handleTimerSet(e: MouseEvent) {
     let numTextGen = parseInt(e.target.innerText);
-    setTimer(numTextGen);
+    setMetric({ type: "time", value: numTextGen });
     if (numTextGen >= 60) {
       let i = Math.floor(numTextGen * 1.5);
       setGenText(await wordsFetched(i));
@@ -49,10 +49,7 @@ export function Test() {
         onSetTimer={(e) => handleTimerSet(e)}
         list={[]}
       />
-      <MetricRender isLaunched={launched} time={timer} />
-
-      {/* do something about this, either have an if else to either render time / wordsTyped or reconstruct the whole timeRender comp */}
-
+      <MetricTracker isLaunched={launched} metric={metric} />
       <div id="test-subject-typer">
         <div id="caret"></div>
         <InputTest isLaunched={launched} />

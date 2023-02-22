@@ -1,4 +1,4 @@
-export function MetricRender({ isLaunched, time }) {
+export function MetricTracker({ isLaunched, metric }) {
   //   let timerEl;
   //   let seconds = 120;
   //   let countDownTimer = function () {
@@ -7,5 +7,5 @@ export function MetricRender({ isLaunched, time }) {
   //     return timerEl;
   //   };
   //   setInterval(countDownTimer, 1000);
-  return <p id="timer">{time == 0 ? null : time}</p>;
+  return <p id="timer"></p>;
 }
