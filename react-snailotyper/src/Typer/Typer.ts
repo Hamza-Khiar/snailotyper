@@ -19,24 +19,20 @@ class Typer {
     return this.words;
   }
   public async textGenerator(wordsToGen: number) {
-    const MIN = 0;
-    const MAX = 999;
     if (this.words.length === 0) {
       await this.Fetcher();
     }
     let wordsGenerated: string[] = [];
-    let i = Math.ceil(Math.random() * (MAX - MIN));
+    let i = Math.floor(Math.random() * this.words.length);
     do {
-      i = Math.ceil(Math.random() * (MAX - MIN));
+      i = Math.floor(Math.random() * this.words.length);
       wordsGenerated.push(this.words[i]);
     } while (wordsGenerated.length !== wordsToGen);
 
     return wordsGenerated;
   }
   public start() {
-    /**
-     * this will detect the keypress and start a timer while calling typing watcher
-     */
+    //
   }
 
   private typingWatcher() {

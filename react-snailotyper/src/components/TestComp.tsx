@@ -3,7 +3,7 @@ import "../stylesheets/css/TestComp.css";
 import { WordComp } from "./WordComp";
 import { NavbarTest } from "./NavbarComp";
 import { InputTest } from "./TestInputComp";
-import { TimerRender } from "./TimerComp";
+import { MetricRender } from "./MetricRenComp";
 
 import Typer from "../Typer/Typer";
 
@@ -13,17 +13,13 @@ let firstFetched = await typer.textGenerator(50);
 
 export function Test() {
   function globalTypeSensor(e: KeyboardEvent) {
-    /**
-     * this will listen to keyboard, then call the start() method in
-     */
-    // let inp = document.getElementById("inputField");
-    // inp?.focus();
-    // typer.start();
+    setLaunched(true);
+    typer.start();
   }
   document.addEventListener("keypress", globalTypeSensor, { once: true });
 
   const [genText, setGenText] = useState<string[]>(firstFetched);
-  // const [launched, setLaunched] = useState<boolean>(false);
+  const [launched, setLaunched] = useState<boolean>(false);
   const [timer, setTimer] = useState<number>(0);
 
   let wordsFetched = async (num: number) => {
@@ -32,6 +28,7 @@ export function Test() {
   };
   async function handleGenTextNum(e: MouseEvent) {
     let numTextGen = parseInt(e.target.innerText);
+    setTimer(numTextGen);
     setGenText(await wordsFetched(numTextGen));
   }
   async function handleTimerSet(e: MouseEvent) {
@@ -52,10 +49,13 @@ export function Test() {
         onSetTimer={(e) => handleTimerSet(e)}
         list={[]}
       />
-      <TimerRender /* isLaunched={launched}  */  /> {/* do something about this, either have an if else to either render time / wordsTyped or reconstruct the whole timeRender comp */}
+      <MetricRender isLaunched={launched} time={timer} />
+
+      {/* do something about this, either have an if else to either render time / wordsTyped or reconstruct the whole timeRender comp */}
+
       <div id="test-subject-typer">
         <div id="caret"></div>
-        <InputTest />
+        <InputTest isLaunched={launched} />
         <WordComp words={genText} />
       </div>
     </>
@@ -64,9 +64,5 @@ export function Test() {
 
 /**
  * TASKS:
- * write this code in a react way:
- *      let inp = document.getElementById("inputField");
- *      inp?.focus();
  * apply focus on InputTest & set Launched for TimerRender to start timer numTextGen
- *
  * */
