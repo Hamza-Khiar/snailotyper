@@ -1,9 +1,4 @@
-interface timerParam {
-  isLaunched?: boolean;
-  time?: number;
-}
-
-export function TimerRender({ isLaunched, time }: timerParam) {
+export function TimerRender() {
   //   let timerEl;
   //   let seconds = 120;
   //   let countDownTimer = function () {
@@ -12,6 +7,5 @@ export function TimerRender({ isLaunched, time }: timerParam) {
   //     return timerEl;
   //   };
   //   setInterval(countDownTimer, 1000);
-  console.log(time);
-  return <p id="timer">{}</p>;
+  return <p id="timer"></p>;
 }

@@ -1,10 +1,11 @@
 import { MouseEvent, useState } from "react";
-import Typer from "../Typer/Typer";
 import "../stylesheets/css/TestComp.css";
 import { WordComp } from "./WordComp";
 import { NavbarTest } from "./NavbarComp";
 import { InputTest } from "./TestInputComp";
 import { TimerRender } from "./TimerComp";
+
+import Typer from "../Typer/Typer";
 
 export let typer = new Typer();
 
@@ -22,7 +23,7 @@ export function Test() {
   document.addEventListener("keypress", globalTypeSensor, { once: true });
 
   const [genText, setGenText] = useState<string[]>(firstFetched);
-  const [launched, setLaunched] = useState<boolean>(false);
+  // const [launched, setLaunched] = useState<boolean>(false);
   const [timer, setTimer] = useState<number>(0);
 
   let wordsFetched = async (num: number) => {
@@ -51,7 +52,7 @@ export function Test() {
         onSetTimer={(e) => handleTimerSet(e)}
         list={[]}
       />
-      <TimerRender isLaunched={launched} time={timer} />
+      <TimerRender /* isLaunched={launched}  */  /> {/* do something about this, either have an if else to either render time / wordsTyped or reconstruct the whole timeRender comp */}
       <div id="test-subject-typer">
         <div id="caret"></div>
         <InputTest />

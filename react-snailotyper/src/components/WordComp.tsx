@@ -4,6 +4,7 @@
  */
 import "../stylesheets/css/WordComp.css";
 import { Character } from "./CharacterComp";
+
 interface word {
   words: Array<string>;
 }
@@ -16,6 +17,6 @@ export function WordComp({ words }: word) {
       </div>
     );
   });
-
+  
   return <>{mappedWord}</>;
 }
