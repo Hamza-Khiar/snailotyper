@@ -14,15 +14,13 @@ let firstFetched = await typer.textGenerator(50);
 export function Test() {
   function globalTypeSensor(e: KeyboardEvent) {
     setLaunched(true);
-    let testObj = typer.start(metric);
-    setTestTracker(testObj);
+    // typer.start(metric);
   }
   document.addEventListener("keypress", globalTypeSensor, { once: true });
 
   const [genText, setGenText] = useState<string[]>(firstFetched);
   const [launched, setLaunched] = useState<boolean>(false);
   const [metric, setMetric] = useState<object>({ type: "time", value: 15 });
-  const [testTracker, setTestTracker] = useState({});
 
   let wordsFetched = async (num: number) => {
     let words = await typer.textGenerator(num);
