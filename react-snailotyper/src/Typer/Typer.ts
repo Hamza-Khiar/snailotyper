@@ -30,12 +30,13 @@ class Typer {
 
     return wordsGenerated;
   }
-  public start() {
+  public start(obj: object) {
     return (this.typingTracker = {
       wpm: 0,
       error: 0,
       accuracy: 0,
       correctWords: [],
+      testType: obj,
     });
   }
 }
