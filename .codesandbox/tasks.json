@@ -1,0 +1,17 @@
+{
+  // These tasks will run in order when initializing your CodeSandbox project.
+  "setupTasks": [],
+
+  // These tasks can be run from CodeSandbox. Running one will open a log in the app.
+  "tasks": {
+    "npm run dev": {
+      "name": "npm run dev",
+      "command": "npm run dev",
+      "runAtStart": true
+    },
+    "cd react-snailotyper && npm run dev": {
+      "name": "cd react-snailotyper && npm run dev",
+      "command": "cd react-snailotyper && npm run dev"
+    }
+  }
+}
