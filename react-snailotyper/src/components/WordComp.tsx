@@ -28,7 +28,7 @@ async function textGenerator(numTextGen: number) {
   do {
     i = Math.floor(Math.random() * words.length);
     wordsGenerated.push(words[i]);
-  } while (wordsGenerated.length !== );
+  } while (wordsGenerated.length !== numTextGen);
 
   return wordsGenerated;
 }

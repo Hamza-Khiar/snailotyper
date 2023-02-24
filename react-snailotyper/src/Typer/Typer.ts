@@ -6,6 +6,7 @@ class Typer {
    *    result= it takes the object created by start with the values of the test and map them into either array or object , didn't decide yet to pass it into chartJS
    */
   private words: string[] = [];
+  private file: string = "./src/assets/words.json";
 
   private async Fetcher() {
     let response = await fetch(this.file);
