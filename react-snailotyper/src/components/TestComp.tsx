@@ -21,7 +21,13 @@ export function Test() {
   const [genText, setGenText] = useState<string[]>(firstFetched);
   const [launched, setLaunched] = useState<boolean>(false);
   const [metric, setMetric] = useState<object>({ type: "time", value: 15 });
-
+  // let typingTracker = {
+  //   wpm: 0,
+  //   error: 0,
+  //   accuracy: 0,
+  //   correctWords: [],
+  //   testType: metric,
+  // }
   let wordsFetched = async (num: number) => {
     let words = await typer.textGenerator(num);
     return words;

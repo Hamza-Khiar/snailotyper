@@ -6,8 +6,6 @@ class Typer {
    *    result= it takes the object created by start with the values of the test and map them into either array or object , didn't decide yet to pass it into chartJS
    */
   private words: string[] = [];
-  private file: string = "./src/assets/words.json";
-  public typingTracker = {};
 
   private async Fetcher() {
     let response = await fetch(this.file);
@@ -29,15 +27,6 @@ class Typer {
     } while (wordsGenerated.length !== wordsToGen);
 
     return wordsGenerated;
-  }
-  public start(obj: object) {
-    return (this.typingTracker = {
-      wpm: 0,
-      error: 0,
-      accuracy: 0,
-      correctWords: [],
-      testType: obj,
-    });
   }
 }
 
