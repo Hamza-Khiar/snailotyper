@@ -21,6 +21,7 @@ export function Test() {
   const [genText, setGenText] = useState<string[]>(firstFetched);
   const [launched, setLaunched] = useState<boolean>(false);
   const [metric, setMetric] = useState<object>({ type: "time", value: 15 });
+  const [numOfWords, setNumOfWords] = useState<number>(50);
   // let typingTracker = {
   //   wpm: 0,
   //   error: 0,
@@ -35,6 +36,7 @@ export function Test() {
   async function handleGenTextNum(e: MouseEvent) {
     let numTextGen = parseInt(e.target.innerText);
     setMetric({ type: "words", value: numTextGen });
+    setNumOfWords(numTextGen);
     setGenText(await wordsFetched(numTextGen));
   }
   async function handleTimerSet(e: MouseEvent) {
@@ -43,9 +45,11 @@ export function Test() {
     if (numTextGen >= 60) {
       let i = Math.floor(numTextGen * 1.5);
       setGenText(await wordsFetched(i));
+      setNumOfWords(i);
     } else {
       let i = Math.floor(numTextGen * 2);
       setGenText(await wordsFetched(i));
+      setNumOfWords(i);
     }
   }
   return (
@@ -59,7 +63,7 @@ export function Test() {
       <div id="test-subject-typer">
         <div id="caret"></div>
         <InputTest isLaunched={launched} />
-        <WordComp words={genText} />
+        <WordComp /* words={genText} */ numOfWords={numOfWords} />
       </div>
     </>
   );
