@@ -17,6 +17,6 @@ export function WordComp({ words }: word) {
       </div>
     );
   });
-  
+
   return <>{mappedWord}</>;
 }

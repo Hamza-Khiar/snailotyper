@@ -7,5 +7,5 @@ export function MetricTracker({ isLaunched, metric }) {
   //     return timerEl;
   //   };
   //   setInterval(countDownTimer, 1000);
-  return <p id="timer">{isLaunched ? metric.value : null}</p>;
+  return <p id="timer">{/* {isLaunched ? metric.value : null} */}</p>;
 }
