@@ -14,7 +14,7 @@ let firstFetched = await typer.textGenerator(50);
 export function Test() {
   function globalTypeSensor(e: KeyboardEvent) {
     setLaunched(true);
-    // typer.start(metric);
+    typer.start(metric);
   }
   document.addEventListener("keypress", globalTypeSensor, { once: true });
 
