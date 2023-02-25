@@ -5,6 +5,10 @@ class Typer {
    *    start=  it starts the test and returns  an object with wpm,error,accuracy,correctWords
    *    result= it takes the object created by start with the values of the test and map them into either array or object , didn't decide yet to pass it into chartJS
    */
+
+  /**
+   * the usecase for Typer is to seperate between ui and data layer, generating text , tracking wpm is the logic of it, which why i decided to put it into a class
+   */
   private words: string[] = [];
   private file: string = "./src/assets/words.json";
   public typingTracker = {};
@@ -38,7 +42,7 @@ class Typer {
       correctWords: [],
       testType: obj,
     };
-    console.log(this.typingTracker);
+
     return this.typingTracker;
   }
 }
