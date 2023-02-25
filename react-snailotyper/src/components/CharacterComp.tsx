@@ -1,6 +1,3 @@
-/**
- *
- */
 import "../stylesheets/css/WordComp.css";
 
 export function Character({ word }: { word: string }) {
