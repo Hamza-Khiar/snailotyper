@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import "../stylesheets/css/TestComp.css";
 import { WordComp } from "./WordComp";
 import { NavbarTest } from "./NavbarComp";
@@ -12,15 +12,22 @@ export let typer = new Typer();
 let firstFetched = await typer.textGenerator(50);
 
 export function Test() {
-  function globalTypeSensor(e: KeyboardEvent) {
-    setLaunched(true);
-    typer.start(metric);
-  }
-  document.addEventListener("keypress", globalTypeSensor, { once: true });
-
   const [genText, setGenText] = useState<string[]>(firstFetched);
   const [launched, setLaunched] = useState<boolean>(false);
   const [metric, setMetric] = useState<object>({ type: "time", value: 15 });
+  const [testTracker, setTestTracker] = useState<object>({});
+
+  useEffect(() => {
+    function globalTypeSensor(e: KeyboardEvent) {
+      setLaunched(true);
+      let testObj = typer.start(metric);
+      setTestTracker(testObj);
+    }
+    document.addEventListener("keypress", globalTypeSensor, { once: true });
+    return () => {
+      document.removeEventListener("keypress", globalTypeSensor);
+    };
+  }, []);
 
   let wordsFetched = async (num: number) => {
     let words = await typer.textGenerator(num);

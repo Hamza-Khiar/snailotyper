@@ -31,13 +31,15 @@ class Typer {
     return wordsGenerated;
   }
   public start(obj: object) {
-    return (this.typingTracker = {
+    this.typingTracker = {
       wpm: 0,
       error: 0,
       accuracy: 0,
       correctWords: [],
       testType: obj,
-    });
+    };
+    console.log(this.typingTracker);
+    return this.typingTracker;
   }
 }
 
