@@ -1,4 +1,10 @@
-import { MouseEvent, useEffect, useState } from "react";
+import {
+  KeyboardEvent,
+  KeyboardEventHandler,
+  MouseEvent,
+  useEffect,
+  useState,
+} from "react";
 import "../stylesheets/css/TestComp.css";
 import { WordComp } from "./WordComp";
 import { NavbarTest } from "./NavbarComp";
@@ -19,6 +25,7 @@ export function Test() {
   const [launched, setLaunched] = useState<boolean>(false);
   const [metric, setMetric] = useState<object>({ type: "time", value: 15 });
   const [testTracker, setTestTracker] = useState<object>({});
+  const [char, setChar] = useState<string>("");
 
   let wordsFetched = async (num: number) => {
     let words = await typer.textGenerator(num);
@@ -42,6 +49,10 @@ export function Test() {
       setGenText(await wordsFetched(i));
     }
   }
+  function keyLogger(e: KeyboardEvent) {
+    console.log(e.key);
+    setChar(e.key);
+  }
 
   useEffect(() => {
     function globalTypeSensor(e: KeyboardEvent) {
@@ -54,6 +65,7 @@ export function Test() {
       document.removeEventListener("keypress", globalTypeSensor);
     };
   }, [metric]);
+
   return (
     <>
       <NavbarTest
@@ -63,8 +75,8 @@ export function Test() {
       />
       <MetricTracker isLaunched={launched} metric={metric} />
       <div id="test-subject-typer">
-        <InputTest isLaunched={launched} />
-        <WordComp words={genText} />
+        <InputTest isLaunched={launched} keyLogger={keyLogger} />
+        <WordComp words={genText} char={char} />
       </div>
     </>
   );

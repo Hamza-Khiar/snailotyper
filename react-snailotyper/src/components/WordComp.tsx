@@ -4,12 +4,14 @@
  */
 import "../stylesheets/css/WordComp.css";
 import { Character } from "./CharacterComp";
+import * as ignoredModKeys from "../ignoredKeys";
 
 interface word {
   words: Array<string>;
+  char: string;
 }
 
-export function WordComp({ words }: word) {
+export function WordComp({ words, char }: word) {
   let mappedWord = words.map((word: string, index: number) => {
     return (
       <div key={index} className="word">
