@@ -18,5 +18,10 @@ export function WordComp({ words }: word) {
     );
   });
 
-  return <>{mappedWord}</>;
+  return (
+    <>
+      <div id="caret"></div>
+      {mappedWord}
+    </>
+  );
 }

@@ -1,12 +1,6 @@
 export function MetricTracker({ isLaunched, metric }) {
-  //   let timerEl;
-  //   let seconds = 120;
-  //   let countDownTimer = function () {
-  //     timerEl = `${Math.floor(seconds / 60)} : ${seconds % 60}`;
-  //     seconds--;
-  //     return timerEl;
-  //   };
-  //   setInterval(countDownTimer, 1000);
+  function handleTimeTrack() {}
+  function handleWordTrack() {}
 
   return <p id="timer">{/* {isLaunched ? metric.value : null} */}</p>;
 }

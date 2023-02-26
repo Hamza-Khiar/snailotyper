@@ -14,6 +14,7 @@ let firstFetched = await typer.textGenerator(50);
 export function Test() {
   let testObj = {};
   let testType = {};
+
   const [genText, setGenText] = useState<string[]>(firstFetched);
   const [launched, setLaunched] = useState<boolean>(false);
   const [metric, setMetric] = useState<object>({ type: "time", value: 15 });
@@ -45,16 +46,14 @@ export function Test() {
   useEffect(() => {
     function globalTypeSensor(e: KeyboardEvent) {
       setLaunched(true);
-      console.log(testType);
-
-      // testObj = typer.start(metric);
-      // setTestTracker(testObj);
+      testObj = typer.start(metric);
+      setTestTracker(testObj);
     }
     document.addEventListener("keypress", globalTypeSensor, { once: true });
     return () => {
       document.removeEventListener("keypress", globalTypeSensor);
     };
-  }, []);
+  }, [metric]);
   return (
     <>
       <NavbarTest
@@ -64,8 +63,7 @@ export function Test() {
       />
       <MetricTracker isLaunched={launched} metric={metric} />
       <div id="test-subject-typer">
-        <div id="caret"></div>
-        <InputTest isLaunched={launched} words={genText} />
+        <InputTest isLaunched={launched} />
         <WordComp words={genText} />
       </div>
     </>
@@ -74,5 +72,7 @@ export function Test() {
 
 /**
  * TASKS:
- * apply focus on InputTest & set Launched for TimerRender to start timer numTextGen
+ * start the test & figure out the logic on how to test the elements
  * */
+
+/* <div id="caret"></div> turn this into it's own component */
