@@ -10,6 +10,7 @@ import { WordComp } from "./WordComp";
 import { NavbarTest } from "./NavbarComp";
 import { InputTest } from "./TestInputComp";
 import { MetricTracker } from "./MetricRenComp";
+import * as ignoredModKeys from "../ignoredKeys";
 
 import Typer from "../Typer/Typer";
 
@@ -50,8 +51,12 @@ export function Test() {
     }
   }
   function keyLogger(e: KeyboardEvent) {
-    console.log(e.key);
-    setChar(e.key);
+    if (ignoredModKeys.ignoredKeys.includes(e.key)) {
+      return e.key;
+    } else {
+      console.log(e.key);
+      setChar(e.key);
+    }
   }
 
   useEffect(() => {
@@ -76,7 +81,7 @@ export function Test() {
       <MetricTracker isLaunched={launched} metric={metric} />
       <div id="test-subject-typer">
         <InputTest isLaunched={launched} keyLogger={keyLogger} />
-        <WordComp words={genText} char={char} />
+        <WordComp words={genText} typedChar={char} />
       </div>
     </>
   );

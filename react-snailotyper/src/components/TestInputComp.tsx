@@ -8,9 +8,9 @@ interface launchTest {
 export function InputTest({ isLaunched, keyLogger }: launchTest) {
   const inputRef = useRef(null);
 
-  // function testLog(e: ChangeEvent) {
-  //   console.log(e.target.value);
-  // }
+  function testLog(e: KeyboardEvent) {
+    console.log(e.target.value);
+  }
 
   /**
    * either lift state up and track each keycode, send it to wordComp and compare if that typed char = char in the word=> set the char to .correct while concat the the char with it's other chars
@@ -23,7 +23,7 @@ export function InputTest({ isLaunched, keyLogger }: launchTest) {
       <input
         type="text"
         id="inputField"
-        /* onChange={testLog} */
+        // onChange={testLog}
         onKeyUp={keyLogger}
         ref={inputRef}
       />
