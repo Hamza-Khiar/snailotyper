@@ -1,10 +1,4 @@
-import {
-  KeyboardEvent,
-  KeyboardEventHandler,
-  MouseEvent,
-  useEffect,
-  useState,
-} from "react";
+import { KeyboardEvent, MouseEvent, useEffect, useState } from "react";
 import "../stylesheets/css/TestComp.css";
 import { WordComp } from "./WordComp";
 import { NavbarTest } from "./NavbarComp";
@@ -52,7 +46,7 @@ export function Test() {
   }
   function keyLogger(e: KeyboardEvent) {
     if (ignoredModKeys.ignoredKeys.includes(e.key)) {
-      return e.key;
+      return null;
     } else {
       console.log(e.key);
       setChar(e.key);
@@ -81,7 +75,7 @@ export function Test() {
       <MetricTracker isLaunched={launched} metric={metric} />
       <div id="test-subject-typer">
         <InputTest isLaunched={launched} keyLogger={keyLogger} />
-        <WordComp words={genText} typedChar={char} />
+        <WordComp words={genText} typedChar={char} testObj={testTracker} />
       </div>
     </>
   );
