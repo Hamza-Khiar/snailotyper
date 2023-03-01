@@ -40,7 +40,6 @@ export function Test() {
     if (ignoredModKeys.ignoredKeys.includes(e.key)) {
       return null;
     } else {
-      console.log(e.key);
       setChar(e.key);
     }
   }
