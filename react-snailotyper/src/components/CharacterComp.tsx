@@ -4,9 +4,11 @@ import "../stylesheets/css/WordComp.css";
 export function Character({
   word,
   typedChar,
+  isCurrent,
 }: {
   word: string;
   typedChar: string;
+  isCurrent: boolean;
 }) {
   let arrayChar = word.split("");
   let mappedCharacters = arrayChar.map((char: string, index: number) => {

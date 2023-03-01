@@ -1,4 +1,4 @@
-import { KeyboardEvent, MouseEvent, useEffect, useState } from "react";
+import { KeyboardEvent, useEffect, useState } from "react";
 import "../stylesheets/css/TestComp.css";
 import { WordComp } from "./WordComp";
 import { NavbarTest } from "./NavbarComp";
@@ -13,34 +13,26 @@ export let typer = new Typer();
 let firstFetched = await typer.textGenerator(50);
 
 export function Test() {
-  let testObj = {};
-  let testType = {};
-
   const [genText, setGenText] = useState<string[]>(firstFetched);
   const [launched, setLaunched] = useState<boolean>(false);
   const [metric, setMetric] = useState<object>({ type: "time", value: 15 });
-  const [testTracker, setTestTracker] = useState<object>({});
   const [char, setChar] = useState<string>("");
 
   let wordsFetched = async (num: number) => {
     let words = await typer.textGenerator(num);
     return words;
   };
-  async function handleGenTextNum(e: MouseEvent) {
-    let numTextGen = parseInt(e.target.innerText);
-    testType = { type: "words", value: numTextGen };
-    setMetric(testType);
-    setGenText(await wordsFetched(numTextGen));
+  async function handleGenTextNum(value: number) {
+    setMetric({ type: "words", value });
+    setGenText(await wordsFetched(value));
   }
-  async function handleTimerSet(e: MouseEvent) {
-    let numTextGen = parseInt(e.target.innerText);
-    testType = { type: "time", value: numTextGen };
-    setMetric(testType);
-    if (numTextGen >= 60) {
-      let i = Math.floor(numTextGen * 1.5);
+  async function handleTimerSet(value: number) {
+    setMetric({ type: "time", value });
+    if (value >= 60) {
+      let i = Math.floor(value * 1.5);
       setGenText(await wordsFetched(i));
     } else {
-      let i = Math.floor(numTextGen * 2);
+      let i = Math.floor(value * 2);
       setGenText(await wordsFetched(i));
     }
   }
@@ -54,10 +46,8 @@ export function Test() {
   }
 
   useEffect(() => {
-    function globalTypeSensor(e: KeyboardEvent) {
+    function globalTypeSensor() {
       setLaunched(true);
-      testObj = typer.start(metric);
-      setTestTracker(testObj);
     }
     document.addEventListener("keypress", globalTypeSensor, { once: true });
     return () => {
@@ -67,15 +57,11 @@ export function Test() {
 
   return (
     <>
-      <NavbarTest
-        onGenText={(e) => handleGenTextNum(e)}
-        onSetTimer={(e) => handleTimerSet(e)}
-        list={[]}
-      />
+      <NavbarTest onGenText={handleGenTextNum} onSetTimer={handleTimerSet} />
       <MetricTracker isLaunched={launched} metric={metric} />
       <div id="test-subject-typer">
         <InputTest isLaunched={launched} keyLogger={keyLogger} />
-        <WordComp words={genText} typedChar={char} testObj={testTracker} />
+        <WordComp words={genText} typedChar={char} />
       </div>
     </>
   );
