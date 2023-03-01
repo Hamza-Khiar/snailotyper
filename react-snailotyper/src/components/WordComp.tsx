@@ -8,11 +8,11 @@ import { Character } from "./CharacterComp";
 
 interface word {
   words: Array<string>;
-  typedChar: string;
+  typedCharObj: { typedChar: string; index: number };
   testObj?: object;
 }
 
-export function WordComp({ words, typedChar, testObj }: word) {
+export function WordComp({ words, typedCharObj, testObj }: word) {
   const [indexWord, setIndexWord] = useState(0);
   const [indexChar, setIndexChar] = useState(0);
 
@@ -20,45 +20,45 @@ export function WordComp({ words, typedChar, testObj }: word) {
   let wordCheck = () => {
     let currentChar = currentWord[indexChar];
 
-    if (typedChar.length === 0) {
+    if (typedCharObj.typedChar.length === 0) {
       return;
     }
-    if (typedChar === " ") {
+    if (typedCharObj.typedChar === " ") {
       setIndexWord((indexWord) => indexWord + 1);
       setIndexChar((indexChar) => indexChar - indexChar);
       currentWord = words[indexWord + 1];
       currentChar = currentWord[indexChar];
-      console.log(currentWord, indexWord, indexChar);
+      // console.log(currentWord, indexWord, indexChar);
       return;
     }
-    if (typedChar === "Backspace") {
+    if (typedCharObj.typedChar === "Backspace") {
       setIndexChar(indexChar - 1);
       return;
     }
-    if (typedChar !== currentChar) {
-      console.log(false, typedChar, currentChar);
+    if (typedCharObj.typedChar !== currentChar) {
+      // console.log(false, typedCharObj, currentChar);
       setIndexChar(indexChar + 1);
       return;
     }
-    if (typedChar === currentChar) {
-      console.log(true, typedChar, currentChar);
+    if (typedCharObj.typedChar === currentChar) {
+      // console.log(true, typedCharObj, currentChar);
       setIndexChar(indexChar + 1);
       return;
     }
   };
 
   let mappedWord = words.map((word: string, index: number) => {
-    if (words[index] === currentWord && index == indexWord) {
-      useEffect(() => {
+    useEffect(() => {
+      if (words[index] === currentWord && index === indexWord) {
         wordCheck();
-      }, [typedChar]);
-      // call a functions who will do the checking
-    }
+      }
+    }, [typedCharObj]);
+
     return (
       <div key={index} className="word">
         <Character
           word={word}
-          typedChar={typedChar}
+          typedChar={typedCharObj.typedChar}
           isCurrent={
             words[index] === currentWord && index == indexWord ? true : false
           }
