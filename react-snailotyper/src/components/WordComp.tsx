@@ -20,9 +20,6 @@ export function WordComp({ words, typedCharObj, testObj }: word) {
   let wordCheck = () => {
     let currentChar = currentWord[indexChar];
 
-    if (typedCharObj.typedChar.length === 0) {
-      return;
-    }
     if (typedCharObj.typedChar === " ") {
       setIndexWord((indexWord) => indexWord + 1);
       setIndexChar((indexChar) => indexChar - indexChar);
@@ -31,28 +28,17 @@ export function WordComp({ words, typedCharObj, testObj }: word) {
       // console.log(currentWord, indexWord, indexChar);
       return;
     }
-    if (typedCharObj.typedChar === "Backspace") {
-      setIndexChar(indexChar - 1);
-      return;
-    }
-    if (typedCharObj.typedChar !== currentChar) {
-      // console.log(false, typedCharObj, currentChar);
-      setIndexChar(indexChar + 1);
-      return;
-    }
-    if (typedCharObj.typedChar === currentChar) {
-      // console.log(true, typedCharObj, currentChar);
-      setIndexChar(indexChar + 1);
-      return;
-    }
+    /**
+     * since the testing is repeated, you gotta do something about it
+     */
   };
 
   let mappedWord = words.map((word: string, index: number) => {
     useEffect(() => {
-      if (words[index] === currentWord && index === indexWord) {
+      if (words[indexWord] === currentWord && index === indexWord) {
         wordCheck();
       }
-    }, [typedCharObj]);
+    }, [typedCharObj.index]);
 
     return (
       <div key={index} className="word">
