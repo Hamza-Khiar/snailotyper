@@ -48,17 +48,11 @@ export function WordComp({ words, typedCharObj, testObj }: word) {
      * since the testing is repeated, you gotta do something about it
      */
   };
-
-  let mappedWord = words.map((word: string, index: number) => {
+  let mappedWords = [];
+  let oldMappedWord = words.map((word: string, index: number) => {
     return (
       <div key={index} className="word">
-        <Character
-          word={word}
-          typedChar={typedCharObj.typedChar}
-          isCurrent={
-            words[index] === currentWord && index == indexWord ? true : false
-          }
-        />
+        <Character word={word} />
       </div>
     );
   });
@@ -72,12 +66,16 @@ export function WordComp({ words, typedCharObj, testObj }: word) {
    * take the firstWord in the list => currentWord, have correctWord=''
    * have an attribute or a class for characterComp to check if it has that attribute , let it have class correct
    * test if the typedChar == the currentChar in the currentWord, if yes,add character to correctWord
+   *
+   *
+   * OR
+   *  have an array of words, each word is destructed to an array of objects with {value: char , className:'' || 'correct'|| 'incorrect'}
    **/
 
   return (
     <>
       <div id="caret"></div>
-      {mappedWord}
+      {oldMappedWord}
     </>
   );
 }
