@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "../stylesheets/css/WordComp.css";
 import { Character } from "./CharacterComp";
+// import { useImmer } from "use-immer";
 
 interface word {
   words: Array<string>;
@@ -8,9 +9,31 @@ interface word {
   testObj?: object;
 }
 
-export function WordComp({ words, typedCharObj }: word) {
-  const [indexWord, setIndexWord] = useState(0);
-  const [indexChar, setIndexChar] = useState(0);
+export function WordComp({ words, typedCharObj, testObj }: word) {
+  const [indexWord, setIndexWord] = useState(0); // for tracking which word to test
+  const [indexChar, setIndexChar] = useState(0); // for tracking which character to test
+
+  let mappedCharactersArray = words.map((word: string) => {
+    let characters = word.split("").map((i, index) => {
+      return { value: i, className: "" };
+    });
+    return characters;
+  });
+  const [mappedChars, setMappedChars] = useState(mappedCharactersArray); // setting changes in the text
+
+  const uiChangeClass = (className: string) => {
+    const uiChange = mappedChars.map((charSetting) => {
+      if (charSetting === mappedChars[indexWord]) {
+        const charChange = charSetting.map((charObj, index) => {
+          if (index == indexChar) {
+            charObj.className = className;
+          }
+          console.log(charObj);
+        });
+        return charChange;
+      }
+    });
+  };
 
   let currentWord = words[indexWord];
   let wordCheck = () => {
@@ -19,11 +42,18 @@ export function WordComp({ words, typedCharObj }: word) {
       return;
     }
     if (typedCharObj.typedChar === "Backspace") {
-      setIndexChar(indexChar - 1);
+      console.log(indexChar);
+      if (indexChar != 0) {
+        setIndexChar(indexChar - 1);
+        uiChangeClass("");
+      } else {
+        return;
+      }
       return;
     }
     if (typedCharObj.typedChar === currentChar) {
-      console.log(currentChar, "correct");
+      uiChangeClass("correct");
+
       setIndexChar(indexChar + 1);
       return;
     }
@@ -36,20 +66,14 @@ export function WordComp({ words, typedCharObj }: word) {
       return;
     }
     if (typedCharObj.typedChar !== currentChar) {
-      console.log(currentChar, "incorrect");
+      uiChangeClass("incorrect");
+
       setIndexChar(indexChar + 1);
       return;
     }
   };
 
-  let mappedCharactersArray = words.map((word: string) => {
-    let characters = word.split("").map((i, index) => {
-      return { value: i, className: "" };
-    });
-    return characters;
-  });
-
-  let MappedWords = mappedCharactersArray.map((mappedWord, index: number) => {
+  let MappedWords = mappedChars.map((mappedWord, index: number) => {
     return (
       <div key={index} className="word">
         <Character word={mappedWord} />

@@ -79,7 +79,7 @@ export function Test() {
       <MetricTracker isLaunched={launched} metric={metric} />
       <div id="test-subject-typer">
         <InputTest isLaunched={launched} keyLogger={keyLogger} />
-        <WordComp words={genText} typedCharObj={char} />
+        <WordComp words={genText} typedCharObj={char} testObj={testTracker} />
       </div>
     </>
   );
