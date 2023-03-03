@@ -32,14 +32,14 @@ export function Test() {
     let words = await typer.textGenerator(num);
     return words;
   };
-  async function handleGenTextNum(e: MouseEvent) {
-    let numTextGen = parseInt(e.target.innerText);
+  async function handleGenTextNum(e: number) {
+    let numTextGen = e;
     testType = { type: "words", value: numTextGen };
     setMetric(testType);
     setGenText(await wordsFetched(numTextGen));
   }
-  async function handleTimerSet(e: MouseEvent) {
-    let numTextGen = parseInt(e.target.innerText);
+  async function handleTimerSet(e: number) {
+    let numTextGen = e;
     testType = { type: "time", value: numTextGen };
     setMetric(testType);
     if (numTextGen >= 60) {
@@ -64,9 +64,9 @@ export function Test() {
       testObj = typer.start(metric);
       setTestTracker(testObj);
     }
-    document.addEventListener("keypress", globalTypeSensor, { once: true });
+    document.addEventListener("keydown", globalTypeSensor, { once: true });
     return () => {
-      document.removeEventListener("keypress", globalTypeSensor);
+      document.removeEventListener("keydown", globalTypeSensor);
     };
   }, [metric]);
 
@@ -75,7 +75,6 @@ export function Test() {
       <NavbarTest
         onGenText={(e) => handleGenTextNum(e)}
         onSetTimer={(e) => handleTimerSet(e)}
-        list={[]}
       />
       <MetricTracker isLaunched={launched} metric={metric} />
       <div id="test-subject-typer">

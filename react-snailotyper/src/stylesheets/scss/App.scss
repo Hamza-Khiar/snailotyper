@@ -35,6 +35,11 @@
       display: inherit;
       list-style: none;
       gap: 1rem;
+      button {
+        border: none;
+        background-color: transparent;
+        color: aqua;
+      }
     }
   }
 }

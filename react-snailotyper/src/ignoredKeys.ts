@@ -11,5 +11,6 @@ export const ignoredKeys = [
   "PageDown",
   "Enter",
   "AltGraph",
+  "Tab",
 ];
-export const modifierKeys = ["Tab", "Backspace", " "];
+export const modifierKeys = ["Backspace", " "];

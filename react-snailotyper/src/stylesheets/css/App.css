@@ -40,5 +40,10 @@
   list-style: none;
   gap: 1rem;
 }
+#main-middle .flex-layout--nav ul button {
+  border: none;
+  background-color: transparent;
+  color: aqua;
+}
 
 /*# sourceMappingURL=App.css.map */
