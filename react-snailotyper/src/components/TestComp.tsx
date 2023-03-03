@@ -26,7 +26,7 @@ export function Test() {
   const [launched, setLaunched] = useState<boolean>(false);
   const [metric, setMetric] = useState<object>({ type: "time", value: 15 });
   const [testTracker, setTestTracker] = useState<object>({});
-  const [char, setChar] = useState<string>("");
+  const [char, setChar] = useState<object>({ typedChar: "", index: 0 });
 
   let wordsFetched = async (num: number) => {
     let words = await typer.textGenerator(num);
@@ -54,8 +54,7 @@ export function Test() {
     if (ignoredModKeys.ignoredKeys.includes(e.key)) {
       return e.key;
     } else {
-      console.log(e.key);
-      setChar(e.key);
+      setChar({ typedChar: e.key, index: char.index + 1 });
     }
   }
 
@@ -81,7 +80,7 @@ export function Test() {
       <MetricTracker isLaunched={launched} metric={metric} />
       <div id="test-subject-typer">
         <InputTest isLaunched={launched} keyLogger={keyLogger} />
-        <WordComp words={genText} typedChar={char} />
+        <WordComp words={genText} typedCharObj={char} />
       </div>
     </>
   );
