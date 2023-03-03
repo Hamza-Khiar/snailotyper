@@ -27,12 +27,18 @@ export function WordComp({ words, typedCharObj, testObj }: word) {
         const charChange = charSetting.map((charObj, index) => {
           if (index == indexChar) {
             charObj.className = className;
+            console.log(index, indexChar, charObj.className);
+            return charObj;
+          } else {
+            return charObj;
           }
-          console.log(charObj);
         });
         return charChange;
+      } else {
+        return charSetting;
       }
     });
+    return uiChange;
   };
 
   let currentWord = words[indexWord];
@@ -42,10 +48,10 @@ export function WordComp({ words, typedCharObj, testObj }: word) {
       return;
     }
     if (typedCharObj.typedChar === "Backspace") {
-      console.log(indexChar);
       if (indexChar != 0) {
-        setIndexChar(indexChar - 1);
+        setIndexChar((indexChar) => indexChar - 1);
         uiChangeClass("");
+        console.log(indexChar);
       } else {
         return;
       }
