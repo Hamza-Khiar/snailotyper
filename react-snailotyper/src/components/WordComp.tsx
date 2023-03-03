@@ -1,7 +1,3 @@
-/**
- *  Purpose of WordComponent
- *  displaying words , check if typed word is right by character, check how many errors
- */
 import { useEffect, useState } from "react";
 import "../stylesheets/css/WordComp.css";
 import { Character } from "./CharacterComp";
@@ -12,7 +8,7 @@ interface word {
   testObj?: object;
 }
 
-export function WordComp({ words, typedCharObj, testObj }: word) {
+export function WordComp({ words, typedCharObj }: word) {
   const [indexWord, setIndexWord] = useState(0);
   const [indexChar, setIndexChar] = useState(0);
 
@@ -44,38 +40,43 @@ export function WordComp({ words, typedCharObj, testObj }: word) {
       setIndexChar(indexChar + 1);
       return;
     }
-    /**
-     * since the testing is repeated, you gotta do something about it
-     */
   };
-  let mappedWords = [];
-  let oldMappedWord = words.map((word: string, index: number) => {
+
+  let mappedCharactersArray = words.map((word: string) => {
+    let characters = word.split("").map((i, index) => {
+      return { value: i, className: "" };
+    });
+    return characters;
+  });
+
+  let MappedWords = mappedCharactersArray.map((mappedWord, index: number) => {
     return (
       <div key={index} className="word">
-        <Character word={word} />
+        <Character word={mappedWord} />
       </div>
     );
   });
 
   useEffect(() => {
-    if (words[indexWord] === currentWord /* && index === indexWord */) {
+    if (words[indexWord] === currentWord) {
       wordCheck();
     }
   }, [typedCharObj]);
-  /**
-   * take the firstWord in the list => currentWord, have correctWord=''
-   * have an attribute or a class for characterComp to check if it has that attribute , let it have class correct
-   * test if the typedChar == the currentChar in the currentWord, if yes,add character to correctWord
-   *
-   *
-   * OR
-   *  have an array of words, each word is destructed to an array of objects with {value: char , className:'' || 'correct'|| 'incorrect'}
-   **/
 
   return (
     <>
       <div id="caret"></div>
-      {oldMappedWord}
+      {MappedWords}
     </>
   );
 }
+
+/**
+ * take the firstWord in the list => currentWord, have correctWord=''
+ * have an attribute or a class for characterComp to check if it has that attribute , let it have class correct
+ * test if the typedChar == the currentChar in the currentWord, if yes,add character to correctWord
+ *
+ *
+ * OR
+ *  have an array of words, each word is destructed to an array of objects with {value: char , className:'' || 'correct'|| 'incorrect'}
+ **/
