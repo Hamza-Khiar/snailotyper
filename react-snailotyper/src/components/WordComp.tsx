@@ -13,21 +13,29 @@ export function WordComp({ words, typedCharObj, testObj }: word) {
   const [indexWord, setIndexWord] = useState(0); // for tracking which word to test
   const [indexChar, setIndexChar] = useState(0); // for tracking which character to test
 
-  let mappedCharactersArray = words.map((word: string) => {
-    let characters = word.split("").map((i, index) => {
-      return { value: i, className: "" };
+  function mapWord(wordArray: Array<string>) {
+    let arrayChar: object[] = [];
+    wordArray.map((word: string) => {
+      let characters = word.split("").map((i, index) => {
+        return { value: i, className: "" };
+      });
+      arrayChar.push(characters);
+      return characters;
     });
-    return characters;
-  });
-  const [mappedChars, setMappedChars] = useState(mappedCharactersArray); // setting changes in the text
+    return arrayChar;
+  }
+  let mappedCharactersArray = mapWord(words);
+
+  const [mappedCharacters, setMappedCharacters] = useState(
+    mappedCharactersArray
+  );
 
   const uiChangeClass = (className: string) => {
-    const uiChange = mappedChars.map((charSetting) => {
-      if (charSetting === mappedChars[indexWord]) {
-        const charChange = charSetting.map((charObj, index) => {
+    const uiChange = mappedCharacters.forEach((charSetting) => {
+      if (charSetting === mappedCharacters[indexWord]) {
+        const charChange = charSetting.forEach((charObj, index) => {
           if (index == indexChar) {
             charObj.className = className;
-            console.log(index, indexChar, charObj.className);
             return charObj;
           } else {
             return charObj;
@@ -73,13 +81,12 @@ export function WordComp({ words, typedCharObj, testObj }: word) {
     }
     if (typedCharObj.typedChar !== currentChar) {
       uiChangeClass("incorrect");
-
       setIndexChar(indexChar + 1);
       return;
     }
   };
 
-  let MappedWords = mappedChars.map((mappedWord, index: number) => {
+  let MappedWords = mappedCharacters.map((mappedWord, index: number) => {
     return (
       <div key={index} className="word">
         <Character word={mappedWord} />
@@ -92,6 +99,13 @@ export function WordComp({ words, typedCharObj, testObj }: word) {
       wordCheck();
     }
   }, [typedCharObj]);
+  useEffect(() => {
+    if (words.length !== mappedCharacters.length) {
+      setMappedCharacters(mapWord(words));
+      setIndexChar(0);
+      setIndexWord(0);
+    }
+  }, [words]);
 
   return (
     <>
