@@ -14,7 +14,7 @@ import * as ignoredModKeys from "../ignoredKeys";
 
 import Typer from "../Typer/Typer";
 
-export let typer = new Typer();
+let typer = new Typer();
 
 let firstFetched = await typer.textGenerator(50);
 

@@ -42,7 +42,6 @@ class Typer {
       correctWords: [],
       testType: obj,
     };
-
     return this.typingTracker;
   }
 }
