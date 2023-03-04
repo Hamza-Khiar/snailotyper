@@ -27,10 +27,11 @@ export function WordComp({ words, typedCharObj, testObj }: word) {
         const charChange = charSetting.forEach((charObj, index) => {
           if (index == indexChar) {
             charObj.className = className;
-            return charObj;
-          } else {
-            return charObj;
-          }
+            // return charObj;
+          } /* else {
+            // return charObj;
+          } */
+          // fix the 'backspace' classname
         });
         return charChange;
       } else {
@@ -46,33 +47,27 @@ export function WordComp({ words, typedCharObj, testObj }: word) {
       return;
     }
     if (typedCharObj.typedChar === "Backspace") {
-      if (indexChar != 0) {
-        setIndexChar((indexChar) => indexChar - 1);
+      if (indexChar > -1) {
+        setIndexChar(indexChar - 1);
         uiChangeClass("");
         console.log(indexChar);
       } else {
-        return;
+        setIndexChar(0);
       }
-      return;
-    }
-    if (typedCharObj.typedChar === currentChar) {
+    } else if (typedCharObj.typedChar === currentChar) {
       uiChangeClass("correct");
-
+      console.log(indexChar, typedCharObj.typedChar, currentChar, "correct");
       setIndexChar(indexChar + 1);
-      return;
-    }
-    if (typedCharObj.typedChar === " ") {
+    } else if (typedCharObj.typedChar === " ") {
       setIndexWord((indexWord) => indexWord + 1);
-      setIndexChar((indexChar) => indexChar - indexChar);
+      setIndexChar((indexChar) => 0);
       currentWord = words[indexWord + 1];
       currentChar = currentWord[indexChar];
       // console.log(currentWord, indexWord, indexChar);
-      return;
-    }
-    if (typedCharObj.typedChar !== currentChar) {
+    } else if (typedCharObj.typedChar !== currentChar) {
       uiChangeClass("incorrect");
+      console.log(indexChar, typedCharObj.typedChar, currentChar, "incorrect");
       setIndexChar(indexChar + 1);
-      return;
     }
   };
   let MappedWords = mappedCharacters.map((mappedWord, index: number) => {
