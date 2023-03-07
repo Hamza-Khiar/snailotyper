@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "../stylesheets/css/WordComp.css";
 import { Character } from "./CharacterComp";
+import { Value } from "sass";
 interface word {
   words: Array<string>;
   typedCharObj: { typedChar: string; index: number };
@@ -12,17 +13,20 @@ export function WordComp({ words, typedCharObj, testObj }: word) {
 
   function mapWord(wordArray: Array<string>) {
     return wordArray.map((word: string) => {
-      return word.split("").map((i, index) => {
+      return word.split("").map((i) => {
         return { value: i, className: "" };
       });
     });
   } // mapping words with their corresponding classes
-  let mappedCharactersArray = mapWord(words);
+
+  let mappedCharactersArray = mapWord(words); // setting the initial mappedWords
   const [mappedCharacters, setMappedCharacters] = useState(
     mappedCharactersArray
   );
   let currentWord = words[indexWord];
   let wordCheck = () => {
+    // this is for checking if the character typed is the right character and set the corresponding classname to the span of the char
+
     let currentChar = currentWord[indexChar];
     if (typedCharObj.typedChar.length === 0) {
       return;
@@ -48,6 +52,7 @@ export function WordComp({ words, typedCharObj, testObj }: word) {
       setIndexChar(indexChar + 1);
     }
   };
+
   const uiChangeClass = (className: string, indexVal: number) => {
     return mappedCharacters.forEach((charSetting) => {
       if (charSetting === mappedCharacters[indexWord]) {
@@ -60,17 +65,27 @@ export function WordComp({ words, typedCharObj, testObj }: word) {
     });
   };
   let MappedWords = mappedCharacters.map((mappedWord, index: number) => {
+    // let mappedChar=mappedWord.map()=>{
+    //   return <span className={val.className}>{val.value}</span>
+    // }
+    console.log(mappedWord);
+
+    /* <Character word={mappedWord} /> */
     return (
       <div key={index} className="word">
-        <Character word={mappedWord} />
+        {mappedWord.map((char: object) => {
+          return <span className={char.className}>{char.value}</span>;
+        })}
       </div>
     );
   });
+
   useEffect(() => {
     if (words[indexWord] === currentWord) {
       wordCheck();
     }
   }, [typedCharObj]);
+
   useEffect(() => {
     setMappedCharacters(mapWord(words));
     setIndexChar(0);
@@ -86,10 +101,12 @@ export function WordComp({ words, typedCharObj, testObj }: word) {
 }
 
 /**
+ * try to seperate between
+ * ___________________
  * take the firstWord in the list => currentWord, have correctWord=''
  * test if the typedChar == the currentChar in the currentWord, if yes,add character to correctWord
- * 
+ *
  * _________________________________
- * if testObj, have correctWord="", 
- * 
+ * if testObj, have correctWord="",  and push chars in it, if ' ' check if the concat string = currentWord if it is add it to  correctWords and setstate of the testObj
+ *
  **/

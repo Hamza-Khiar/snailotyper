@@ -2,6 +2,7 @@ import { useState } from "react";
 
 // define your tuples as const so that union types can be generated
 // it's mostly useful for METRIC_TYPE so we can switch on the value nicely
+
 const WORDS = "words";
 const TIME = "time";
 const METRIC_TYPE = [WORDS, TIME] as const;
@@ -9,6 +10,7 @@ const SECONDS = [15, 30, 60, 120] as const;
 const WORD_COUNT = [10, 25, 50, 100] as const;
 
 // generate a type form your const tuples
+
 type MetricType = typeof METRIC_TYPE[number];
 type Second = typeof SECONDS[number];
 type WordCount = typeof WORD_COUNT[number];
