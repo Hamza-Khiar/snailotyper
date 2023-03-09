@@ -3,28 +3,18 @@ import { useState } from "react";
 const updateTimer = (time: number, isIncremental: boolean) => {
   const ONE_MINUTE = 60;
   let intervalId: number;
-  if (isIncremental) {
-    intervalId = setInterval(() => {
-      let min = Math.floor(time / ONE_MINUTE);
-      let seconds = time % 60;
-      console.log(`${min}:${seconds}`);
+  intervalId = setInterval(() => {
+    let min = Math.floor(time / ONE_MINUTE);
+    let seconds = time % 60;
+    console.log(`${min}:${seconds}`);
+    if (isIncremental) {
+      time == 20 ? clearInterval(intervalId) : null;
       time++;
-      if (time == 20) {
-        /* this condition will recieve an event that will stop it */
-        clearInterval(intervalId);
-      }
-    }, 1000);
-  } else if (!isIncremental) {
-    intervalId = setInterval(() => {
-      let min = Math.floor(time / ONE_MINUTE);
-      let seconds = time % 60;
-      console.log(`${min}:${seconds}`);
+    } else if (!isIncremental) {
       time--;
-      if (time == 0) {
-        clearInterval(intervalId);
-      }
-    }, 1000);
-  }
+      time == 0 ? clearInterval(intervalId) : null;
+    }
+  }, 1000);
 };
 
 const timer = (incremental: boolean, val: number = 0) => {
@@ -34,7 +24,7 @@ const timer = (incremental: boolean, val: number = 0) => {
     return;
   }
   if (incremental) {
-    updateTimer(time, true);
+    updateTimer(0, true);
   }
 };
 
@@ -46,9 +36,12 @@ export function MetricTracker({
   metric: object;
 }) {
   const [timeTrack, setTimeTrack] = useState(0);
-  if (isLaunched && metric.type == "time") {
-  } else if (isLaunched && metric.type == "words") {
-  }
+
+  // if (isLaunched && metric.type == "time") {
+  //   timer(false, metric.value);
+  // } else if (isLaunched && metric.type == "words") {
+  //   timer(true, metric.value);
+  // }
 
   return <p id="timer">{}</p>;
 }

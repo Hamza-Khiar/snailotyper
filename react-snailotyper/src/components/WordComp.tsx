@@ -25,6 +25,7 @@ export function WordComp({
   const [mappedCharacters, setMappedCharacters] = useState(() =>
     mapWord(words)
   );
+  const [correctWord, setCorrectWord] = useState("");
 
   const uiChangeClass = (className: string, indexVal: number) => {
     return mappedCharacters.forEach((charSetting) => {
@@ -50,25 +51,29 @@ export function WordComp({
       if (indexChar > -1) {
         setIndexChar(indexChar - 1);
         uiChangeClass("", indexChar - 1);
+        setCorrectWord(correctWord.slice(0, -1));
       } else {
         setIndexChar(0);
       }
     } else if (typedCharObj.typedChar === currentChar) {
       uiChangeClass("correct", indexChar);
+      setCorrectWord(correctWord.concat(typedCharObj.typedChar));
       setIndexChar(indexChar + 1);
     } else if (typedCharObj.typedChar === " ") {
       if (indexChar == 0) {
         return;
       } else {
         setIndexWord((indexWord) => indexWord + 1);
-        setStateTestTrack({
-          ...testObj,
-          correctWords: [currentWord, ...testObj.correctWords],
-        });
-        // console.log(testObj);
+        if (correctWord === currentWord) {
+          setStateTestTrack({
+            ...testObj,
+            correctWords: [currentWord, ...testObj.correctWords],
+          });
+        }
+        setCorrectWord("");
         setIndexChar(0);
         currentWord = words[indexWord + 1];
-        currentChar = currentWord[indexChar];
+        currentChar = currentWord[indexChar]; // fix the finish test if indexWord===words.length
       }
     } else if (typedCharObj.typedChar !== currentChar) {
       uiChangeClass("incorrect", indexChar);

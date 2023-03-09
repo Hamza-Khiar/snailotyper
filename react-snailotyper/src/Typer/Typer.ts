@@ -41,6 +41,7 @@ class Typer {
       accuracy: 0,
       correctWords: [],
       testType: obj,
+      chrono: 0,
     };
     return this.typingTracker;
   }

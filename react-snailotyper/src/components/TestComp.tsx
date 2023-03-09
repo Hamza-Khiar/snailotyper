@@ -1,10 +1,4 @@
-import {
-  KeyboardEvent,
-  KeyboardEventHandler,
-  MouseEvent,
-  useEffect,
-  useState,
-} from "react";
+import { KeyboardEvent, useEffect, useState } from "react";
 import "../stylesheets/css/TestComp.css";
 import { WordComp } from "./WordComp";
 import { NavbarTest } from "./NavbarComp";
@@ -25,7 +19,7 @@ export function Test() {
   const [genText, setGenText] = useState<string[]>(firstFetched);
   const [launched, setLaunched] = useState<boolean>(false);
   const [metric, setMetric] = useState<object>(testType);
-  const [testTracker, setTestTracker] = useState<object>({});
+  const [testTracker, setTestTracker] = useState<object>(testObj);
   const [char, setChar] = useState<object>({ typedChar: "", index: 0 });
 
   let wordsFetched = async (num: number) => {
@@ -60,7 +54,6 @@ export function Test() {
   }
 
   function setStateTestTrack(valueToSet: object) {
-    console.log(testTracker, valueToSet);
     setTestTracker(valueToSet);
   }
 
@@ -70,14 +63,11 @@ export function Test() {
       testObj = typer.start(metric);
       setTestTracker(testObj);
     }
-
     document.addEventListener("keydown", globalTypeSensor, { once: true });
     return () => {
-      document.removeEventListener("keydown", globalTypeSensor, {
-        once: true,
-      });
+      document.removeEventListener("keydown", globalTypeSensor);
     };
-  }, [char]);
+  }, [launched]);
   /* 
   this should be fixed as well, if ignoredKeys == the typedKey, don't start the test, else start test
    */
@@ -108,6 +98,10 @@ export function Test() {
 }
 
 /**
+ *
+ * BEST PRACTICES:
+ *  -think about your component declaratively
+ *
  * TASKS:
  *    updating testObj in the children
  *    figure out how to end the test on which Conditions

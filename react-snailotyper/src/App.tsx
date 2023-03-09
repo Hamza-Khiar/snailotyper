@@ -18,6 +18,7 @@ function App() {
       <div id="main-middle">
         <h1>SnailType your way to a blazingly fast typer</h1>
         <Test />
+        
       </div>
     </div>
   );
