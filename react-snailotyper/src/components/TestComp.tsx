@@ -20,11 +20,11 @@ let firstFetched = await typer.textGenerator(50);
 
 export function Test() {
   let testObj = {};
-  let testType = {};
+  let testType = { type: "time", value: 15 };
 
   const [genText, setGenText] = useState<string[]>(firstFetched);
   const [launched, setLaunched] = useState<boolean>(false);
-  const [metric, setMetric] = useState<object>({ type: "time", value: 15 });
+  const [metric, setMetric] = useState<object>(testType);
   const [testTracker, setTestTracker] = useState<object>({});
   const [char, setChar] = useState<object>({ typedChar: "", index: 0 });
 
@@ -50,6 +50,7 @@ export function Test() {
       setGenText(await wordsFetched(i));
     }
   }
+
   function keyLogger(e: KeyboardEvent) {
     if (ignoredModKeys.ignoredKeys.includes(e.key)) {
       return e.key;
@@ -58,17 +59,33 @@ export function Test() {
     }
   }
 
+  function setStateTestTrack(valueToSet: object) {
+    console.log(testTracker, valueToSet);
+    setTestTracker(valueToSet);
+  }
+
   useEffect(() => {
     function globalTypeSensor(e: KeyboardEvent) {
       setLaunched(true);
       testObj = typer.start(metric);
       setTestTracker(testObj);
     }
+
     document.addEventListener("keydown", globalTypeSensor, { once: true });
     return () => {
-      document.removeEventListener("keydown", globalTypeSensor);
+      document.removeEventListener("keydown", globalTypeSensor, {
+        once: true,
+      });
     };
-  }, [metric]);
+  }, [char]);
+  /* 
+  this should be fixed as well, if ignoredKeys == the typedKey, don't start the test, else start test
+   */
+
+  useEffect(() => {
+    setLaunched(false);
+    setTestTracker({});
+  }, [genText]);
 
   return (
     <>
@@ -79,7 +96,12 @@ export function Test() {
       <MetricTracker isLaunched={launched} metric={metric} />
       <div id="test-subject-typer">
         <InputTest isLaunched={launched} keyLogger={keyLogger} />
-        <WordComp words={genText} typedCharObj={char} testObj={testTracker} />
+        <WordComp
+          words={genText}
+          typedCharObj={char}
+          testObj={testTracker}
+          setStateTestTrack={setStateTestTrack}
+        />
       </div>
     </>
   );
@@ -87,7 +109,10 @@ export function Test() {
 
 /**
  * TASKS:
- * start the test & figure out the logic on how to test the elements
+ *    updating testObj in the children
+ *    figure out how to end the test on which Conditions
+ *    find a way to calculate wpm in metric "words"
+ *
  * */
 
 /* <div id="caret"></div> turn this into it's own component */
