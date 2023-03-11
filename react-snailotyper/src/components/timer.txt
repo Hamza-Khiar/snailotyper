@@ -1,0 +1,28 @@
+const updateTimer = (time: number, isIncremental: boolean) => {
+  const ONE_MINUTE = 60;
+  let intervalId: number;
+  intervalId = setInterval(() => {
+    let min = Math.floor(time / ONE_MINUTE);
+    let seconds = time % 60;
+    if (isIncremental) {
+      time == 20 ? clearInterval(intervalId) : null;
+      time++;
+    } else if (!isIncremental) {
+      time--;
+      time == 0 ? clearInterval(intervalId) : null;
+    }
+    chronoTime = `${min}:${seconds}`;
+  }, 1000);
+};
+
+const timer = (incremental: boolean, val: number = 0) => {
+  let time = val;
+  if (!incremental) {
+    updateTimer(time, false);
+    return ;
+  }
+  if (incremental) {
+    updateTimer(0, true);
+    return ;
+  }
+};

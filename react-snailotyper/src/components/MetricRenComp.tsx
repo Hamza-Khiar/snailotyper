@@ -1,47 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+/**
+ * the purpose of this function is to display the metric on which we're testing of, launching a timer based on what metric we have
+ */
 
-const updateTimer = (time: number, isIncremental: boolean) => {
-  const ONE_MINUTE = 60;
-  let intervalId: number;
-  intervalId = setInterval(() => {
-    let min = Math.floor(time / ONE_MINUTE);
-    let seconds = time % 60;
-    console.log(`${min}:${seconds}`);
-    if (isIncremental) {
-      time == 20 ? clearInterval(intervalId) : null;
-      time++;
-    } else if (!isIncremental) {
-      time--;
-      time == 0 ? clearInterval(intervalId) : null;
-    }
-  }, 1000);
-};
-
-const timer = (incremental: boolean, val: number = 0) => {
-  let time = val;
-  if (!incremental) {
-    updateTimer(time, false);
-    return;
-  }
-  if (incremental) {
-    updateTimer(0, true);
-  }
-};
+function timer(metric: string) {
+  // launch the corresponding timer based on what kind of metric there is
+  // if it's words the timer will be incremental, if it's time it'll take the value of metric.value & decrement it by each sec
+}
+function metricDisplayer() {
+  // this will formulate and the metric to display, if it's time => `${min}:{sec}` ; if it's words => `${indexWord}/{wordsLength}`
+}
 
 export function MetricTracker({
   isLaunched,
   metric,
+  wordsLength,
 }: {
   isLaunched: boolean;
   metric: object;
+  wordsLength?: number;
 }) {
-  const [timeTrack, setTimeTrack] = useState(0);
+  let trackObj = {
+    metricTrack: "",
+    timeTrack: "",
+  };
+  const [tracker, setTracker] = useState(trackObj);
 
-  // if (isLaunched && metric.type == "time") {
-  //   timer(false, metric.value);
-  // } else if (isLaunched && metric.type == "words") {
-  //   timer(true, metric.value);
-  // }
+  /**
+   * 1. launch Timer
+   * 2. render metric, if words get the currentWord from WordComp else , track time
+   */
 
+  useEffect(() => {
+    // if launched, start timer
+  }, [isLaunched]);
   return <p id="timer">{}</p>;
 }

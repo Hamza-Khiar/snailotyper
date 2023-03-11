@@ -83,7 +83,11 @@ export function Test() {
         onGenText={(e) => handleGenTextNum(e)}
         onSetTimer={(e) => handleTimerSet(e)}
       />
-      <MetricTracker isLaunched={launched} metric={metric} />
+      <MetricTracker
+        isLaunched={launched}
+        metric={metric}
+        wordsLength={genText.length}
+      />
       <div id="test-subject-typer">
         <InputTest isLaunched={launched} keyLogger={keyLogger} />
         <WordComp
@@ -99,11 +103,8 @@ export function Test() {
 
 /**
  *
- * BEST PRACTICES:
- *  -think about your component declaratively
- *
  * TASKS:
- *    updating testObj in the children
+ *    render metric in MetricRenderComp
  *    figure out how to end the test on which Conditions
  *    find a way to calculate wpm in metric "words"
  *

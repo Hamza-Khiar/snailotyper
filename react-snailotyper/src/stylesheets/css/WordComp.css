@@ -1,5 +1,9 @@
 .word {
   color: rgba(0, 255, 255, 0.204);
+  margin: 0 0.2em;
+}
+.word > span {
+  letter-spacing: 1px;
 }
 
 .correct {

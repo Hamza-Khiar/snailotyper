@@ -72,8 +72,13 @@ export function WordComp({
         }
         setCorrectWord("");
         setIndexChar(0);
-        currentWord = words[indexWord + 1];
-        currentChar = currentWord[indexChar]; // fix the finish test if indexWord===words.length
+        if (indexWord + 1 === mappedCharacters.length) {
+          console.log("test is finished");
+          return;
+        } else {
+          currentWord = words[indexWord + 1];
+          currentChar = currentWord[0];
+        }
       }
     } else if (typedCharObj.typedChar !== currentChar) {
       uiChangeClass("incorrect", indexChar);
@@ -111,7 +116,7 @@ export function WordComp({
 
   return (
     <>
-      <div id="caret"></div>
+      {/* <span id="caret"></span> */}
       {MappedWords}
     </>
   );

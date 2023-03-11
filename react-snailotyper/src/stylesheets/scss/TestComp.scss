@@ -5,14 +5,20 @@
   justify-self: center;
   font-size: x-large;
   line-height: 30px;
-  #caret {
-    width: 3px;
+}
+#timer {
+  text-align: center;
+}
+
+/* 
+#caret {
+    width: 1px;
     height: 2ex;
     left: 4px;
     font-size: 1em;
     top: -2.5px;
     position: relative;
-    background-color: black;
+    background-color: rgb(173, 173, 173);
     animation: tick-infinity 1s cubic-bezier(0.46, 0.03, 0.52, 0.96) infinite;
     @keyframes tick-infinity {
       0% {
@@ -25,11 +31,5 @@
         opacity: 1;
       }
     }
-  }
-  .word {
-    margin: 0 0.2em;
-  }
-}
-#timer {
-  text-align: center;
-}
+  } 
+*/
