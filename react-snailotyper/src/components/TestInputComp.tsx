@@ -1,21 +1,34 @@
 import { ChangeEvent, useEffect, useRef } from "react";
 import "../stylesheets/css/TestInputComp.css";
-interface launchTest {
-  isLaunched: boolean;
-  keyLogger: KeyboardEvent;
-}
 
-export function InputTest({ isLaunched, keyLogger }: launchTest) {
+export function InputTest({ keyLogger }: { keyLogger: KeyboardEvent }) {
   const inputRef = useRef(null);
-  if (isLaunched) {
-    inputRef.current?.focus();
+
+  inputRef.current?.focus();
+  function testLog(e: KeyboardEvent) {
+    if (e.key == " ") {
+      inputRef.current.value = "";
+    }
+  }
+  function reFocusInput() {
+    if (inputRef.current?.blur) {
+      inputRef.current?.focus();
+    }
   }
 
-  // the reFocusing to the input should be fixed
-
+  useEffect(() => {
+    document.addEventListener("click", reFocusInput);
+  }, [inputRef.current]);
   return (
     <>
-      <input type="text" id="inputField" onKeyUp={keyLogger} ref={inputRef} />
+      <input
+        type="text"
+        id="inputField"
+        onKeyUp={keyLogger}
+        onKeyDown={testLog}
+        ref={inputRef}
+        autoComplete="off"
+      />
     </>
   );
 }

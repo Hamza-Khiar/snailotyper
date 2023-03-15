@@ -2,10 +2,19 @@ import { useEffect, useState } from "react";
 import "../stylesheets/css/WordComp.css";
 interface word {
   words: Array<string>;
-  typedCharObj: { typedChar: string; index: number };
-  testObj: object;
+  typedCharObj?: { typedChar: string; index: number };
+  testObj: {
+    wpm: number;
+    error: number;
+    accuracy: number;
+    typedWords: string[];
+    testType: { type: string; value: number };
+    chrono: number;
+  };
   setStateTestTrack: CallableFunction;
+  getidxWord: CallableFunction;
 }
+
 function mapWord(wordArray: Array<string>) {
   return wordArray.map((word: string) => {
     return word.split("").map((i) => {
@@ -19,13 +28,14 @@ export function WordComp({
   typedCharObj,
   testObj,
   setStateTestTrack,
+  getidxWord,
 }: word) {
   const [indexWord, setIndexWord] = useState(0); // for tracking which word to test
   const [indexChar, setIndexChar] = useState(0); // for tracking which character to test
   const [mappedCharacters, setMappedCharacters] = useState(() =>
     mapWord(words)
   );
-  const [correctWord, setCorrectWord] = useState("");
+  const [typedWord, setTypedtWord] = useState("");
 
   const uiChangeClass = (className: string, indexVal: number) => {
     return mappedCharacters.forEach((charSetting) => {
@@ -39,8 +49,8 @@ export function WordComp({
     });
   };
 
-  let currentWord = words[indexWord];
   let wordCheck = () => {
+    let currentWord = words[indexWord];
     // this is for checking if the character typed is the right character and set the corresponding classname to the span of the char
 
     let currentChar = currentWord[indexChar];
@@ -51,37 +61,43 @@ export function WordComp({
       if (indexChar > -1) {
         setIndexChar(indexChar - 1);
         uiChangeClass("", indexChar - 1);
-        setCorrectWord(correctWord.slice(0, -1));
+        setTypedtWord(typedWord.slice(0, -1));
       } else {
         setIndexChar(0);
       }
     } else if (typedCharObj.typedChar === currentChar) {
       uiChangeClass("correct", indexChar);
-      setCorrectWord(correctWord.concat(typedCharObj.typedChar));
+      setTypedtWord(typedWord.concat(typedCharObj.typedChar));
       setIndexChar(indexChar + 1);
+      getidxWord(indexWord);
     } else if (typedCharObj.typedChar === " ") {
       if (indexChar == 0) {
         return;
       } else {
         setIndexWord((indexWord) => indexWord + 1);
-        if (correctWord === currentWord) {
+        getidxWord(indexWord + 1);
+        if (typedWord === currentWord) {
           setStateTestTrack({
             ...testObj,
-            correctWords: [currentWord, ...testObj.correctWords],
+            correctWords: [...testObj.correctWords, currentWord],
           });
         }
-        setCorrectWord("");
+        setTypedtWord("");
         setIndexChar(0);
-        if (indexWord + 1 === mappedCharacters.length) {
-          console.log("test is finished");
-          return;
-        } else {
-          currentWord = words[indexWord + 1];
-          currentChar = currentWord[0];
-        }
+        // if (indexWord + 1 === mappedCharacters.length) {
+        //   console.log("test is finished");
+        //   return;
+        // } else {
+        //   currentWord = words[indexWord + 1];
+        //   currentChar = currentWord[0];
+        // }
+
+        currentWord = words[indexWord + 1];
+        currentChar = currentWord[0];
       }
     } else if (typedCharObj.typedChar !== currentChar) {
       uiChangeClass("incorrect", indexChar);
+      setTypedtWord(typedWord.concat(typedCharObj.typedChar));
       setStateTestTrack({ ...testObj, error: testObj.error + 1 });
       setIndexChar(indexChar + 1);
     }
@@ -102,9 +118,7 @@ export function WordComp({
   });
 
   useEffect(() => {
-    if (words[indexWord] === currentWord) {
-      wordCheck();
-    }
+    wordCheck();
   }, [typedCharObj]);
 
   useEffect(() => {
@@ -124,10 +138,10 @@ export function WordComp({
 
 /**
  * ___________________
- * take the firstWord in the list => currentWord, have correctWord=''
- * test if the typedChar == the currentChar in the currentWord, if yes,add character to correctWord
+ * take the firstWord in the list => currentWord, have typedWord=''
+ * test if the typedChar == the currentChar in the currentWord, if yes,add character to typedWord
  *
  * _________________________________
- * if testObj, have correctWord="",  and push chars in it, if ' ' check if the concat string = currentWord if it is add it to  correctWords and setstate of the testObj
- * this will update the CorrectWords & Error
+ * if testObj, have typedWord="",  and push chars in it, if ' ' check if the concat string = currentWord if it is add it to  typedWords and setstate of the testObj
+ * this will update the typedWords & Error
  **/

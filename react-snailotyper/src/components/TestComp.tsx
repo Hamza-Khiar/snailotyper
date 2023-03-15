@@ -10,16 +10,25 @@ import Typer from "../Typer/Typer";
 
 let typer = new Typer();
 
-let firstFetched = await typer.textGenerator(50);
+let firstFetched = await typer.textGenerator(30);
 
 export function Test() {
   let testObj = {};
   let testType = { type: "time", value: 15 };
 
   const [genText, setGenText] = useState<string[]>(firstFetched);
+
   const [launched, setLaunched] = useState<boolean>(false);
+
   const [metric, setMetric] = useState<object>(testType);
+  // if you could group metric and testTracked that would be good
   const [testTracker, setTestTracker] = useState<object>(testObj);
+
+  const [wordMetric, setWordMetric] = useState({
+    wordsLength: 0,
+    indexWord: 0,
+  }); // object for both wordsLength & idxWord
+
   const [char, setChar] = useState<object>({ typedChar: "", index: 0 });
 
   let wordsFetched = async (num: number) => {
@@ -48,7 +57,10 @@ export function Test() {
   function keyLogger(e: KeyboardEvent) {
     if (ignoredModKeys.ignoredKeys.includes(e.key)) {
       return e.key;
+    } else if (e.ctrlKey && e.shiftKey && e.key) {
+      return;
     } else {
+      setLaunched(true);
       setChar({ typedChar: e.key, index: char.index + 1 });
     }
   }
@@ -56,10 +68,16 @@ export function Test() {
   function setStateTestTrack(valueToSet: object) {
     setTestTracker(valueToSet);
   }
+  function getIdxWord(idx: number) {
+    setWordMetric({
+      ...wordMetric,
+      wordsLength: genText.length,
+      indexWord: idx,
+    });
+  }
 
   useEffect(() => {
     function globalTypeSensor(e: KeyboardEvent) {
-      setLaunched(true);
       testObj = typer.start(metric);
       setTestTracker(testObj);
     }
@@ -75,6 +93,7 @@ export function Test() {
   useEffect(() => {
     setLaunched(false);
     setTestTracker({});
+    setWordMetric({ wordsLength: genText.length, indexWord: 0 });
   }, [genText]);
 
   return (
@@ -86,15 +105,16 @@ export function Test() {
       <MetricTracker
         isLaunched={launched}
         metric={metric}
-        wordsLength={genText.length}
+        wordMetric={wordMetric}
       />
       <div id="test-subject-typer">
-        <InputTest isLaunched={launched} keyLogger={keyLogger} />
+        <InputTest keyLogger={keyLogger} />
         <WordComp
           words={genText}
           typedCharObj={char}
           testObj={testTracker}
           setStateTestTrack={setStateTestTrack}
+          getidxWord={getIdxWord}
         />
       </div>
     </>
@@ -104,10 +124,10 @@ export function Test() {
 /**
  *
  * TASKS:
- *    render metric in MetricRenderComp
  *    figure out how to end the test on which Conditions
- *    find a way to calculate wpm in metric "words"
- *
+ *    find a way to calculate wpm in metric "words", => using the chrono param in testObj
  * */
 
-/* <div id="caret"></div> turn this into it's own component */
+/**
+ * the auto scroll should be added &  <div id="caret"></div> turn this into it's own component
+ */
