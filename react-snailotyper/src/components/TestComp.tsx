@@ -5,8 +5,16 @@ import { NavbarTest } from "./NavbarComp";
 import { InputTest } from "./TestInputComp";
 import { MetricTracker } from "./MetricRenComp";
 import * as ignoredModKeys from "../ignoredKeys";
-
 import Typer from "../Typer/Typer";
+
+interface testObj {
+  wpm: number;
+  error: number;
+  accuracy: number;
+  correctWords: string[];
+  testType: { type: string; value: number };
+  chrono: number;
+}
 
 let typer = new Typer();
 
@@ -16,25 +24,30 @@ export function Test() {
   let testObj = {};
   let testType = { type: "time", value: 15 };
 
-  const [genText, setGenText] = useState<string[]>(firstFetched);
+  const [genText, setGenText] = useState<string[]>(firstFetched); // for the initial display fo text
 
   const [launched, setLaunched] = useState<boolean>(false);
 
-  const [metric, setMetric] = useState<object>(testType);
-  // if you could group metric and testTracked that would be good
-  const [testTracker, setTestTracker] = useState<object>(testObj);
+  const [metric, setMetric] = useState<{ type: string; value: number }>(
+    testType
+  );
+  const [testTracker, setTestTracker] = useState<object | testObj>(testObj);
 
   const [wordMetric, setWordMetric] = useState({
     wordsLength: 0,
     indexWord: 0,
-  }); // object for both wordsLength & idxWord
+  }); // object for both wordsLength & idxWord, would be needed for display of metric if it was "words"
 
-  const [char, setChar] = useState<object>({ typedChar: "", index: 0 });
+  const [char, setChar] = useState<{ typedChar: string; index: number }>({
+    typedChar: "",
+    index: 0,
+  });
 
   let wordsFetched = async (num: number) => {
     let words = await typer.textGenerator(num);
     return words;
   };
+
   async function handleGenTextNum(e: number) {
     let numTextGen = e;
     testType = { type: "words", value: numTextGen };
@@ -57,7 +70,7 @@ export function Test() {
   function keyLogger(e: KeyboardEvent) {
     if (ignoredModKeys.ignoredKeys.includes(e.key)) {
       return e.key;
-    } else if (e.ctrlKey && e.shiftKey && e.key) {
+    } else if (e.ctrlKey && (e.shiftKey || e.metaKey) && e.key) {
       return;
     } else {
       setLaunched(true);
@@ -69,9 +82,8 @@ export function Test() {
     setTestTracker(valueToSet);
   }
   function getIdxWord(idx: number) {
-    setWordMetric({
+    return setWordMetric({
       ...wordMetric,
-      wordsLength: genText.length,
       indexWord: idx,
     });
   }
@@ -129,5 +141,5 @@ export function Test() {
  * */
 
 /**
- * the auto scroll should be added &  <div id="caret"></div> turn this into it's own component
+ * the auto scroll should be added
  */

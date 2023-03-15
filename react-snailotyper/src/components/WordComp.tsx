@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import "../stylesheets/css/WordComp.css";
+interface testObj {
+  wpm: number;
+  error: number;
+  accuracy: number;
+  correctWords: string[];
+  testType: { type: string; value: number };
+  chrono: number;
+}
 interface word {
   words: Array<string>;
-  typedCharObj?: { typedChar: string; index: number };
-  testObj: {
-    wpm: number;
-    error: number;
-    accuracy: number;
-    typedWords: string[];
-    testType: { type: string; value: number };
-    chrono: number;
-  };
+  typedCharObj: { typedChar: string; index: number };
+  testObj: testObj;
   setStateTestTrack: CallableFunction;
   getidxWord: CallableFunction;
 }
@@ -52,8 +53,10 @@ export function WordComp({
   let wordCheck = () => {
     let currentWord = words[indexWord];
     // this is for checking if the character typed is the right character and set the corresponding classname to the span of the char
-
-    let currentChar = currentWord[indexChar];
+    let currentChar;
+    if (currentWord !== undefined /* this is for the test not to break */) {
+      currentChar = currentWord[indexChar];
+    }
     if (typedCharObj.typedChar.length === 0) {
       return;
     }
@@ -84,13 +87,13 @@ export function WordComp({
         }
         setTypedtWord("");
         setIndexChar(0);
-        // if (indexWord + 1 === mappedCharacters.length) {
-        //   console.log("test is finished");
-        //   return;
-        // } else {
-        //   currentWord = words[indexWord + 1];
-        //   currentChar = currentWord[0];
-        // }
+        if (indexWord + 1 >= mappedCharacters.length) {
+          console.log("test is finished");
+          return;
+        } else {
+          currentWord = words[indexWord + 1];
+          currentChar = currentWord[0];
+        }
 
         currentWord = words[indexWord + 1];
         currentChar = currentWord[0];
@@ -106,7 +109,7 @@ export function WordComp({
   let MappedWords = mappedCharacters.map((mappedWord, index: number) => {
     return (
       <div key={index} className="word">
-        {mappedWord.map((char: object, index) => {
+        {mappedWord.map((char: { className: string; value: string }, index) => {
           return (
             <span className={char.className} key={index}>
               {char.value}
@@ -130,7 +133,7 @@ export function WordComp({
 
   return (
     <>
-      {/* <span id="caret"></span> */}
+      <span id="caret"></span>
       {MappedWords}
     </>
   );

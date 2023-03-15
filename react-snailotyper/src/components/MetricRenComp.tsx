@@ -51,11 +51,11 @@ function metricDisplayer(
   metric: metric,
   setTracker: CallableFunction,
   tracker: tracker,
-  wordMetric: wordMetric
+  wordMetric?: wordMetric
 ) {
   let metricDisplay: string;
   if (metric.type == "words") {
-    metricDisplay = `${wordMetric.indexWord}/${wordMetric.wordsLength}`;
+    metricDisplay = `${wordMetric?.indexWord}/${wordMetric?.wordsLength}`;
     setTracker({ ...tracker, metricTrack: metricDisplay });
   } else if (metric.type == "time") {
     setTracker({ ...tracker, metricTrack: tracker.timeTrack });
@@ -70,7 +70,7 @@ export function MetricTracker({
 }: {
   isLaunched: boolean;
   metric: metric;
-  wordMetric: wordMetric;
+  wordMetric?: wordMetric;
 }) {
   let trackObj = {
     metricTrack: "",
@@ -85,9 +85,11 @@ export function MetricTracker({
       clearIntervalId = timer(metric, setTracker, tracker); // starts the timer while im getting the intervalId
     }
   }, [isLaunched]);
+
   useEffect(() => {
     metricDisplayer(metric, setTracker, tracker, wordMetric);
   }, [tracker.timeTrack]);
+
   useEffect(() => {
     clearInterval(clearIntervalId); // reset the timer by clearing interval
     setTracker(trackObj);
