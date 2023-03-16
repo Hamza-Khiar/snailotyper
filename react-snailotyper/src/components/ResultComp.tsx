@@ -1,19 +1,32 @@
-import { useEffect } from "react";
+import "../stylesheets/css/Result.css";
+import { useEffect, useState } from "react";
 import { testObj, typer } from "./TestComp";
-
 
 export function Result({ testLog }: { testLog: testObj }) {
   /**
    * this will get tesstLog and make a pie Chart for it
    */
+  const [resultLog, setResultLog] = useState(testLog);
   useEffect(() => {
-    console.log("this is result", testLog);
-    typer.result(testLog);
+    return setResultLog(typer.result(testLog));
   }, [true]);
 
   return (
-    <>
-      <p>Resultados</p>
-    </>
+    <div id="result-test">
+      <div id="chart-acc-err">
+        <canvas id="chartDisplay"></canvas>
+      </div>
+      <div id="wpm">
+        <p>{resultLog.wpm}</p>
+        <p>WPM</p>
+      </div>
+      <div id="timeDisplay">
+        <p>
+          {resultLog.testType.type == "time"
+            ? `${resultLog.testType.value}s`
+            : `${resultLog.chrono}`}
+        </p>
+      </div>
+    </div>
   );
 }

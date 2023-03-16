@@ -48,12 +48,10 @@ class Typer {
       /* if i typed x amount of words in y amount of time how many i can type in one minute
        */
       WPM = Math.round((ONE_MINUTE * typedWords) / timeOfTest);
-      console.log(WPM);
       return WPM;
     }
     if (typeof time == "number") {
       WPM = Math.round((ONE_MINUTE * typedWords) / time);
-      console.log(WPM);
       return WPM;
     }
   }
@@ -101,17 +99,7 @@ class Typer {
           : testLog.chrono
       ),
     };
-    console.log(resultObj);
-    // return {
-    //   ...testLog,
-    //   accuracy: this.calculateAcc(testLog.correctWords, testLog.error),
-    //   wpm: this.calculateWPM(
-    //     testLog.correctWords,
-    //     testLog.testType.type == "time"
-    //       ? testLog.testType.value
-    //       : testLog.chrono
-    //   ),
-    // };
+    return resultObj;
   }
 }
 
