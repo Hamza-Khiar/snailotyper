@@ -10,6 +10,7 @@
     "watch:scss": "sass -w src/stylesheets/scss:src/stylesheets/css"
   },
   "dependencies": {
+    "chart.js": "^4.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sass": "^1.57.1",

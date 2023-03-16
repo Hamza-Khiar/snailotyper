@@ -5,15 +5,21 @@ import { useState } from "react";
 
 function App() {
   const [isFinished, setIsFinished] = useState<boolean>(false);
-  function isfinishTest(bool: boolean) {
-    return setIsFinished(bool);
+  const [testLog, setTestLog] = useState({});
+
+  function getTestLog(testInstanceLog: object) {
+    setTestLog(testInstanceLog);
   }
   return (
     <div className="App">
       <nav className="App-header-nav"></nav>
       <div id="main-middle">
         <h1>SnailType your way to a blazingly fast typer</h1>
-        {isFinished ? <Result /> : <Test />}
+        {isFinished ? (
+          <Result testLog={testLog} />
+        ) : (
+          <Test isfinishTest={setIsFinished} getTestLog={getTestLog} />
+        )}
       </div>
     </div>
   );
@@ -28,4 +34,6 @@ export default App;
           <li>Account</li>
           <li>Settings</li>
           <li>log-out</li>
-        </ul> */
+        </ul>
+        
+        */

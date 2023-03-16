@@ -6,7 +6,7 @@ interface testObj {
   accuracy: number;
   correctWords: string[];
   testType: { type: string; value: number };
-  chrono: number;
+  chrono: string;
 }
 interface word {
   words: Array<string>;
@@ -88,7 +88,6 @@ export function WordComp({
         setTypedtWord("");
         setIndexChar(0);
         if (indexWord + 1 >= mappedCharacters.length) {
-          console.log("test is finished");
           return;
         } else {
           currentWord = words[indexWord + 1];
@@ -131,20 +130,5 @@ export function WordComp({
     setStateTestTrack({});
   }, [words]);
 
-  return (
-    <>
-      <span id="caret"></span>
-      {MappedWords}
-    </>
-  );
+  return <>{MappedWords}</>;
 }
-
-/**
- * ___________________
- * take the firstWord in the list => currentWord, have typedWord=''
- * test if the typedChar == the currentChar in the currentWord, if yes,add character to typedWord
- *
- * _________________________________
- * if testObj, have typedWord="",  and push chars in it, if ' ' check if the concat string = currentWord if it is add it to  typedWords and setstate of the testObj
- * this will update the typedWords & Error
- **/

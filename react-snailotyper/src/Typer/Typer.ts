@@ -21,6 +21,9 @@ class Typer {
 
     return this.words;
   }
+  private calculateWPM_Acc() {
+    //
+  }
   public async textGenerator(wordsToGen: number) {
     if (this.words.length === 0) {
       await this.Fetcher();
@@ -41,9 +44,14 @@ class Typer {
       accuracy: 0,
       correctWords: [],
       testType: obj,
-      chrono: 0,
+      chrono: "",
     };
     return this.typingTracker;
+  }
+  public result(testLog: object) {
+    // this will take the object and calculate the following, wpm,accuracy, based on the testType Object
+    
+    this.calculateWPM_Acc();
   }
 }
 

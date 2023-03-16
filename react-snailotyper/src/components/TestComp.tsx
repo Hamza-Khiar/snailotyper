@@ -7,7 +7,7 @@ import { MetricTracker } from "./MetricRenComp";
 import * as ignoredModKeys from "../ignoredKeys";
 import Typer from "../Typer/Typer";
 
-interface testObj {
+export interface testObj {
   wpm: number;
   error: number;
   accuracy: number;
@@ -16,11 +16,17 @@ interface testObj {
   chrono: number;
 }
 
-let typer = new Typer();
+export let typer = new Typer();
 
 let firstFetched = await typer.textGenerator(30);
 
-export function Test() {
+export function Test({
+  isfinishTest,
+  getTestLog,
+}: {
+  isfinishTest: CallableFunction;
+  getTestLog: CallableFunction;
+}) {
   let testObj = {};
   let testType = { type: "time", value: 15 };
 
@@ -87,6 +93,10 @@ export function Test() {
       indexWord: idx,
     });
   }
+  function setChrono_getTestLog(chrono: string) {
+    setTestTracker({ ...testTracker, chrono: chrono });
+    getTestLog({ ...testTracker, chrono: chrono });
+  }
 
   useEffect(() => {
     function globalTypeSensor(e: KeyboardEvent) {
@@ -118,6 +128,8 @@ export function Test() {
         isLaunched={launched}
         metric={metric}
         wordMetric={wordMetric}
+        isfinishTest={isfinishTest}
+        setChrono={setChrono_getTestLog}
       />
       <div id="test-subject-typer">
         <InputTest keyLogger={keyLogger} />
@@ -136,10 +148,5 @@ export function Test() {
 /**
  *
  * TASKS:
- *    figure out how to end the test on which Conditions
  *    find a way to calculate wpm in metric "words", => using the chrono param in testObj
  * */
-
-/**
- * the auto scroll should be added
- */

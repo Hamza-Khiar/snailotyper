@@ -1,7 +1,4 @@
 import { useEffect, useState } from "react";
-/**
- * the purpose of this function is to display the metric on which we're testing of, launching a timer based on what metric we have
- */
 interface metric {
   type: string;
   value: number;
@@ -41,7 +38,6 @@ const timer = (
       time++;
       return;
     }
-    /* console.log(timeDisplay); */
     return timeDisplay;
   }, 1000);
   return intervalId;
@@ -58,25 +54,29 @@ function metricDisplayer(
     metricDisplay = `${wordMetric?.indexWord}/${wordMetric?.wordsLength}`;
     setTracker({ ...tracker, metricTrack: metricDisplay });
   } else if (metric.type == "time") {
-    setTracker({ ...tracker, metricTrack: tracker.timeTrack });
+    metricDisplay = tracker.timeTrack;
+    setTracker({ ...tracker, metricTrack: metricDisplay });
   }
-  // this will formulate and the metric to display, if it's time => `${min}:{sec}` ; if it's words => `${indexWord}/{wordsLength}`
 }
+
 let clearIntervalId: number;
 export function MetricTracker({
   isLaunched,
   metric,
   wordMetric,
+  isfinishTest,
+  setChrono,
 }: {
   isLaunched: boolean;
   metric: metric;
   wordMetric?: wordMetric;
+  isfinishTest: CallableFunction;
+  setChrono: CallableFunction;
 }) {
   let trackObj = {
     metricTrack: "",
     timeTrack: "",
   };
-  // metricDisplayer(metric, setTracker, tracker, wordMetric);
   const [tracker, setTracker] = useState(trackObj);
 
   useEffect(() => {
@@ -90,6 +90,18 @@ export function MetricTracker({
     metricDisplayer(metric, setTracker, tracker, wordMetric);
   }, [tracker.timeTrack]);
 
+  useEffect(() => {
+    if (
+      (metric.type == "time" && tracker.metricTrack == "0:0") ||
+      (metric.type == "words" &&
+        tracker.metricTrack ==
+          `${wordMetric?.wordsLength}/${wordMetric?.wordsLength}`)
+    ) {
+      setChrono(tracker.timeTrack);
+      clearInterval(clearIntervalId);
+      isfinishTest(true);
+    }
+  }, [tracker.metricTrack]);
   useEffect(() => {
     clearInterval(clearIntervalId); // reset the timer by clearing interval
     setTracker(trackObj);
