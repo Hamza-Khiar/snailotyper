@@ -36,6 +36,7 @@ const timer = (
     }
     if (metric.type == "words") {
       time++;
+      time == 1800 ? clearInterval(clearIntervalId) : null;
       return;
     }
     return timeDisplay;

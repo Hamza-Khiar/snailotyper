@@ -35,5 +35,4 @@ export default App;
           <li>Settings</li>
           <li>log-out</li>
         </ul>
-        
         */

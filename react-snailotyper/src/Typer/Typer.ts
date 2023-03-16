@@ -1,3 +1,5 @@
+import { testObj } from "../components/TestComp";
+
 class Typer {
   /**
    * there are gonna be different functions for different utilities:
@@ -21,9 +23,49 @@ class Typer {
 
     return this.words;
   }
-  private calculateWPM_Acc() {
-    //
+  private getNumOfChars(correctWords: string[]) {
+    let numOfChars: number = 0;
+    correctWords.forEach((correctWord: string) => {
+      numOfChars += correctWord.length;
+    });
+    return numOfChars;
   }
+  private convertTimeToNum(time: string) {
+    const SECONDS = 60;
+    let timeSplit = time.split(":");
+    let minutes = parseInt(timeSplit[0]);
+    let seconds = parseInt(timeSplit[1]);
+    let rawTime = minutes * SECONDS + seconds;
+    return rawTime;
+  }
+
+  private calculateWPM(correctWords: string[], time: string | number) {
+    const ONE_MINUTE = 60;
+    let typedWords = correctWords.length;
+    let WPM: number;
+    if (typeof time == "string") {
+      let timeOfTest = this.convertTimeToNum(time);
+      /* if i typed x amount of words in y amount of time how many i can type in one minute
+       */
+      WPM = Math.round((ONE_MINUTE * typedWords) / timeOfTest);
+      console.log(WPM);
+      return WPM;
+    }
+    if (typeof time == "number") {
+      WPM = Math.round((ONE_MINUTE * typedWords) / time);
+      console.log(WPM);
+      return WPM;
+    }
+  }
+  private calculateAcc(correctWords: string[], error: number) {
+    let numOfChars: number = this.getNumOfChars(correctWords);
+    let numOfCorrectChars: number = 0;
+    let Acc: number = 0;
+    numOfCorrectChars = numOfChars - error;
+    Acc = Math.floor((numOfCorrectChars * 100) / numOfChars);
+    return Acc;
+  }
+
   public async textGenerator(wordsToGen: number) {
     if (this.words.length === 0) {
       await this.Fetcher();
@@ -48,10 +90,28 @@ class Typer {
     };
     return this.typingTracker;
   }
-  public result(testLog: object) {
-    // this will take the object and calculate the following, wpm,accuracy, based on the testType Object
-    
-    this.calculateWPM_Acc();
+  public result(testLog: testObj) {
+    let resultObj = {
+      ...testLog,
+      accuracy: this.calculateAcc(testLog.correctWords, testLog.error),
+      wpm: this.calculateWPM(
+        testLog.correctWords,
+        testLog.testType.type == "time"
+          ? testLog.testType.value
+          : testLog.chrono
+      ),
+    };
+    console.log(resultObj);
+    // return {
+    //   ...testLog,
+    //   accuracy: this.calculateAcc(testLog.correctWords, testLog.error),
+    //   wpm: this.calculateWPM(
+    //     testLog.correctWords,
+    //     testLog.testType.type == "time"
+    //       ? testLog.testType.value
+    //       : testLog.chrono
+    //   ),
+    // };
   }
 }
 
