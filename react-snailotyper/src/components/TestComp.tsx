@@ -17,8 +17,10 @@ export interface testObj {
 }
 
 export let typer = new Typer();
-
-let firstFetched = await typer.textGenerator(30);
+let wordsFetched = async (num: number) => {
+  let words = await typer.textGenerator(num);
+  return words;
+};
 
 export function Test({
   isfinishTest,
@@ -40,7 +42,7 @@ export function Test({
   };
   let testType = { type: "time", value: 15 };
 
-  const [genText, setGenText] = useState<string[]>(firstFetched); // for the initial display fo text
+  const [genText, setGenText] = useState<string[]>([]); // for the initial display fo text
 
   const [launched, setLaunched] = useState<boolean>(false);
 
@@ -58,11 +60,6 @@ export function Test({
     typedChar: "",
     index: 0,
   });
-
-  let wordsFetched = async (num: number) => {
-    let words = await typer.textGenerator(num);
-    return words;
-  };
 
   async function handleGenTextNum(e: number) {
     let numTextGen = e;
@@ -107,7 +104,6 @@ export function Test({
     setTestTracker({ ...testTracker, chrono: chrono });
     getTestLog({ ...testTracker, chrono: chrono });
   }
-
   useEffect(() => {
     function globalTypeSensor(e: KeyboardEventInit) {
       setTestTracker(typer.start(metric));
@@ -121,6 +117,11 @@ export function Test({
   /* 
   this should be fixed as well, if ignoredKeys == the typedKey, don't start the test, else start test
    */
+  useEffect(() => {
+    (async () => {
+      setGenText(await wordsFetched(30));
+    })();
+  }, [true]);
 
   useEffect(() => {
     setLaunched(false);
@@ -154,9 +155,3 @@ export function Test({
     </>
   );
 }
-
-/**
- *
- * TASKS:
- *    find a way to calculate wpm in metric "words", => using the chrono param in testObj
- * */

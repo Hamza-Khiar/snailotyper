@@ -9,7 +9,7 @@ export function InputTest({
   const inputRef = useRef<HTMLInputElement>(null);
 
   inputRef.current?.focus();
-  function testLog(e: KeyboardEvent) {
+  function testLog(e: any) {
     if (e.key == " ") {
       inputRef.current!.value = "";
     }
