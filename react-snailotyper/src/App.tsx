@@ -2,12 +2,24 @@ import "./stylesheets/css/App.css";
 import { Test } from "./components/TestComp";
 import { Result } from "./components/ResultComp";
 import { useState } from "react";
+import { testObj } from "./components/TestComp";
 
 function App() {
   const [isFinished, setIsFinished] = useState<boolean>(false);
-  const [testLog, setTestLog] = useState({});
+  let initialisedTestLog = {
+    wpm: 0,
+    error: 0,
+    accuracy: 0,
+    correctWords: [],
+    testType: {
+      type: "",
+      value: 0,
+    },
+    chrono: 0,
+  };
+  const [testLog, setTestLog] = useState<testObj>(initialisedTestLog);
 
-  function getTestLog(testInstanceLog: object) {
+  function getTestLog(testInstanceLog: testObj) {
     setTestLog(testInstanceLog);
   }
   return (

@@ -4,7 +4,7 @@ import "../stylesheets/css/TestInputComp.css";
 export function InputTest({ keyLogger }: { keyLogger: KeyboardEvent }) {
   const inputRef = useRef(null);
 
-  inputRef.current?.focus();
+  inputRef.current.focus();
   function testLog(e: KeyboardEvent) {
     if (e.key == " ") {
       inputRef.current.value = "";
@@ -12,7 +12,7 @@ export function InputTest({ keyLogger }: { keyLogger: KeyboardEvent }) {
   }
   function reFocusInput() {
     if (inputRef.current?.blur) {
-      inputRef.current?.focus();
+      inputRef.current.focus();
     }
   }
 

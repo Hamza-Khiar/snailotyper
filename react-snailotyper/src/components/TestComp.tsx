@@ -8,7 +8,7 @@ import * as ignoredModKeys from "../ignoredKeys";
 import Typer from "../Typer/Typer";
 
 export interface testObj {
-  wpm: number;
+  wpm: number | undefined;
   error: number;
   accuracy: number;
   correctWords: string[];
@@ -27,7 +27,18 @@ export function Test({
   isfinishTest: CallableFunction;
   getTestLog: CallableFunction;
 }) {
-  let testObj = {};
+  const testObjShape: testObj = {
+    wpm: 0,
+    error: 0,
+    accuracy: 0,
+    correctWords: [],
+    testType: {
+      type: "",
+      value: 0,
+    },
+    chrono: 0,
+  };
+  let testObj: testObj | object = testObjShape;
   let testType = { type: "time", value: 15 };
 
   const [genText, setGenText] = useState<string[]>(firstFetched); // for the initial display fo text
@@ -37,7 +48,9 @@ export function Test({
   const [metric, setMetric] = useState<{ type: string; value: number }>(
     testType
   );
-  const [testTracker, setTestTracker] = useState<object | testObj>(testObj);
+  const [testTracker, setTestTracker] = useState<testObj | object>(
+    testObjShape
+  );
 
   const [wordMetric, setWordMetric] = useState({
     wordsLength: 0,
@@ -84,7 +97,7 @@ export function Test({
     }
   }
 
-  function setStateTestTrack(valueToSet: object) {
+  function setStateTestTrack(valueToSet: testObj) {
     setTestTracker(valueToSet);
   }
   function getIdxWord(idx: number) {
@@ -93,15 +106,16 @@ export function Test({
       indexWord: idx,
     });
   }
-  function setChrono_getTestLog(chrono: string) {
+  function setChrono_getTestLog(chrono: number) {
     setTestTracker({ ...testTracker, chrono: chrono });
     getTestLog({ ...testTracker, chrono: chrono });
   }
 
   useEffect(() => {
-    function globalTypeSensor(e: KeyboardEvent) {
+    function globalTypeSensor(e: KeyboardEventInit) {
       testObj = typer.start(metric);
       setTestTracker(testObj);
+      return;
     }
     document.addEventListener("keydown", globalTypeSensor, { once: true });
     return () => {
@@ -114,7 +128,7 @@ export function Test({
 
   useEffect(() => {
     setLaunched(false);
-    setTestTracker({});
+    setTestTracker(testObjShape);
     setWordMetric({ wordsLength: genText.length, indexWord: 0 });
   }, [genText]);
 

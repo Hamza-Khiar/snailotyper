@@ -8,13 +8,13 @@ export function Result({ testLog }: { testLog: testObj }) {
    */
   const [resultLog, setResultLog] = useState(testLog);
   useEffect(() => {
-    setResultLog(typer.result(testLog));
+    return setResultLog(typer.result(testLog));
   }, [true]);
   return (
     <div id="result-test">
       <div id="chart-acc-err">
         {/* <Doughnut data={data} /> */}
-        <p className="top">{resultLog.accuracy} %</p>
+        <p className="top">{resultLog.accuracy}%</p>
         <p className="bottom">Accuracy</p>
         <p className="error Bottom">error : {resultLog.error}</p>
       </div>
