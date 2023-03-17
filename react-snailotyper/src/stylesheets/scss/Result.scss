@@ -1,0 +1,37 @@
+#result-test {
+  // display: grid;
+  // grid
+  display: flex;
+  justify-content: space-around;
+  width: 80vw;
+  text-align: center;
+  align-self: center;
+  margin: 0 auto;
+
+  > div {
+    width: 13vw;
+  }
+  .top {
+    font-size: 5rem;
+  }
+  .bottom {
+    font-size: 2rem;
+    color: rgb(122, 113, 142);
+  }
+  .error {
+    color: rgb(106, 92, 135);
+  }
+  #wpm > .top {
+    font-size: 8rem;
+  }
+  #timeDisplay > .top {
+    font-size: 4.5rem;
+  }
+  #timeDisplay > .bottom {
+    font-size: 1.5rem;
+    &::after {
+      content: "s";
+      font-size: 0.8em;
+    }
+  }
+}

@@ -1,3 +1,36 @@
-
+#result-test {
+  display: flex;
+  justify-content: space-around;
+  width: 80vw;
+  text-align: center;
+  align-self: center;
+  margin: 0 auto;
+}
+#result-test > div {
+  width: 13vw;
+}
+#result-test .top {
+  font-size: 5rem;
+}
+#result-test .bottom {
+  font-size: 2rem;
+  color: rgb(122, 113, 142);
+}
+#result-test .error {
+  color: rgb(106, 92, 135);
+}
+#result-test #wpm > .top {
+  font-size: 8rem;
+}
+#result-test #timeDisplay > .top {
+  font-size: 4.5rem;
+}
+#result-test #timeDisplay > .bottom {
+  font-size: 1.5rem;
+}
+#result-test #timeDisplay > .bottom::after {
+  content: "s";
+  font-size: 0.8em;
+}
 
 /*# sourceMappingURL=Result.css.map */

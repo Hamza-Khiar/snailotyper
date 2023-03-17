@@ -99,6 +99,7 @@ class Typer {
           : testLog.chrono
       ),
     };
+    console.log(resultObj);
     return resultObj;
   }
 }
