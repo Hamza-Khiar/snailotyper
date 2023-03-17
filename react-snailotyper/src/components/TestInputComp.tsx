@@ -1,18 +1,22 @@
-import { ChangeEvent, useEffect, useRef } from "react";
+import { KeyboardEventHandler, useEffect, useRef } from "react";
 import "../stylesheets/css/TestInputComp.css";
 
-export function InputTest({ keyLogger }: { keyLogger: KeyboardEvent }) {
-  const inputRef = useRef(null);
+export function InputTest({
+  keyLogger,
+}: {
+  keyLogger: KeyboardEventHandler<HTMLInputElement>;
+}) {
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  inputRef.current.focus();
+  inputRef.current?.focus();
   function testLog(e: KeyboardEvent) {
     if (e.key == " ") {
-      inputRef.current.value = "";
+      inputRef.current!.value = "";
     }
   }
   function reFocusInput() {
     if (inputRef.current?.blur) {
-      inputRef.current.focus();
+      inputRef.current?.focus();
     }
   }
 

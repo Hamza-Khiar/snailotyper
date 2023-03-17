@@ -13,7 +13,7 @@ export interface testObj {
   accuracy: number;
   correctWords: string[];
   testType: { type: string; value: number };
-  chrono: number;
+  chrono: number | string;
 }
 
 export let typer = new Typer();
@@ -38,7 +38,6 @@ export function Test({
     },
     chrono: 0,
   };
-  let testObj: testObj | object = testObjShape;
   let testType = { type: "time", value: 15 };
 
   const [genText, setGenText] = useState<string[]>(firstFetched); // for the initial display fo text
@@ -48,9 +47,7 @@ export function Test({
   const [metric, setMetric] = useState<{ type: string; value: number }>(
     testType
   );
-  const [testTracker, setTestTracker] = useState<testObj | object>(
-    testObjShape
-  );
+  const [testTracker, setTestTracker] = useState<testObj>(testObjShape);
 
   const [wordMetric, setWordMetric] = useState({
     wordsLength: 0,
@@ -86,11 +83,11 @@ export function Test({
     }
   }
 
-  function keyLogger(e: KeyboardEvent) {
+  function keyLogger(e: KeyboardEvent): string | undefined {
     if (ignoredModKeys.ignoredKeys.includes(e.key)) {
       return e.key;
     } else if (e.ctrlKey && (e.shiftKey || e.metaKey) && e.key) {
-      return;
+      return "";
     } else {
       setLaunched(true);
       setChar({ typedChar: e.key, index: char.index + 1 });
@@ -113,8 +110,7 @@ export function Test({
 
   useEffect(() => {
     function globalTypeSensor(e: KeyboardEventInit) {
-      testObj = typer.start(metric);
-      setTestTracker(testObj);
+      setTestTracker(typer.start(metric));
       return;
     }
     document.addEventListener("keydown", globalTypeSensor, { once: true });

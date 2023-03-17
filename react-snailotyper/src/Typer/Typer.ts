@@ -13,7 +13,14 @@ class Typer {
    */
   private words: string[] = [];
   private file: string = "./src/assets/words.json";
-  public typingTracker = {};
+  private typingTracker: testObj = {
+    wpm: 0,
+    error: 0,
+    accuracy: 0,
+    correctWords: [],
+    testType: { type: "", value: 0 },
+    chrono: "",
+  };
 
   private async Fetcher() {
     let response = await fetch(this.file);
@@ -77,15 +84,8 @@ class Typer {
 
     return wordsGenerated;
   }
-  public start(obj: object) {
-    this.typingTracker = {
-      wpm: 0,
-      error: 0,
-      accuracy: 0,
-      correctWords: [],
-      testType: obj,
-      chrono: "",
-    };
+  public start(obj: { type: string; value: number }) {
+    this.typingTracker = { ...this.typingTracker, testType: obj };
     return this.typingTracker;
   }
   public result(testLog: testObj) {

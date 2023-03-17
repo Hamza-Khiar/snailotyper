@@ -1,13 +1,6 @@
 import { useEffect, useState } from "react";
 import "../stylesheets/css/WordComp.css";
-interface testObj {
-  wpm: number;
-  error: number;
-  accuracy: number;
-  correctWords: string[];
-  testType: { type: string; value: number };
-  chrono: string;
-}
+import { testObj } from "./TestComp";
 interface word {
   words: Array<string>;
   typedCharObj: { typedChar: string; index: number };
