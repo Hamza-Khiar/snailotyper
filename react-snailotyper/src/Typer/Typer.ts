@@ -1,4 +1,5 @@
 import { testObj } from "../components/TestComp";
+import words from "../assets/words.json";
 
 class Typer {
   /**
@@ -22,11 +23,8 @@ class Typer {
     chrono: "",
   };
 
-  private async Fetcher() {
-    let response = await fetch(this.file);
-    let words = await response.json();
-    words = words.words;
-    this.words.push(...words);
+  private Fetcher() {
+    this.words.push(...words.words);
 
     return this.words;
   }
