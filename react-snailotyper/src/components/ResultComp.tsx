@@ -7,7 +7,7 @@ export function Result({
   resetTest,
 }: {
   testLog: testObj;
-  isFinishedTest: boolean;
+  resetTest: CallableFunction;
 }) {
   /**
    * this will get tesstLog and make a pie Chart for it
