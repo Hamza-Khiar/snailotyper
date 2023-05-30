@@ -28,7 +28,7 @@ function App() {
       <div id="main-middle">
         <h1>SnailType your way to a blazingly fast typer</h1>
         {isFinished ? (
-          <Result testLog={testLog} />
+          <Result testLog={testLog} resetTest={setIsFinished} />
         ) : (
           <Test isfinishTest={setIsFinished} getTestLog={getTestLog} />
         )}
@@ -38,13 +38,3 @@ function App() {
 }
 
 export default App;
-
-/* <div className="Logo">
-          <p>Logo</p>
-        </div>
-        <ul>
-          <li>Account</li>
-          <li>Settings</li>
-          <li>log-out</li>
-        </ul>
-        */

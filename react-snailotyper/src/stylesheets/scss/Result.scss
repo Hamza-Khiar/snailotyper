@@ -1,6 +1,4 @@
 #result-test {
-  // display: grid;
-  // grid
   display: flex;
   justify-content: space-around;
   width: 80vw;
@@ -34,4 +32,13 @@
       font-size: 0.8em;
     }
   }
+}
+
+#reset-btn {
+  width: 20%;
+  margin: 10vh auto;
+  padding: 1vh;
+  background-color: aqua;
+  font-size: 180%;
+  border-radius: 15px;
 }

@@ -2,7 +2,13 @@ import "../stylesheets/css/Result.css";
 import { useEffect, useState } from "react";
 import { testObj, typer } from "./TestComp";
 
-export function Result({ testLog }: { testLog: testObj }) {
+export function Result({
+  testLog,
+  resetTest,
+}: {
+  testLog: testObj;
+  isFinishedTest: boolean;
+}) {
   /**
    * this will get tesstLog and make a pie Chart for it
    */
@@ -11,26 +17,39 @@ export function Result({ testLog }: { testLog: testObj }) {
     return setResultLog(typer.result(testLog));
   }, [true]);
   return (
-    <div id="result-test">
-      <div id="chart-acc-err">
-        {/* <Doughnut data={data} /> */}
-        <p className="top">{resultLog.accuracy}%</p>
-        <p className="bottom">Accuracy</p>
-        <p className="error Bottom">error : {resultLog.error}</p>
+    <>
+      <div id="result-test">
+        <div id="chart-acc-err">
+          {/* <Doughnut data={data} /> */}
+          <p className="top">{resultLog.accuracy}%</p>
+          <p className="bottom">Accuracy</p>
+          <p className="error Bottom">error : {resultLog.error}</p>
+        </div>
+        <div id="wpm">
+          <p className="top">{resultLog.wpm}</p>
+          <p className="bottom">WPM</p>
+        </div>
+        <div id="timeDisplay">
+          <p className="top">
+            {resultLog.testType.type == "time"
+              ? `${resultLog.testType.value}`
+              : `${resultLog.chrono}`}
+          </p>
+          <p className="bottom">time</p>
+        </div>
       </div>
-      <div id="wpm">
-        <p className="top">{resultLog.wpm}</p>
-        <p className="bottom">WPM</p>
-      </div>
-      <div id="timeDisplay">
-        <p className="top">
-          {resultLog.testType.type == "time"
-            ? `${resultLog.testType.value}`
-            : `${resultLog.chrono}`}
-        </p>
-        <p className="bottom">time</p>
-      </div>
-    </div>
+
+      <button
+        type="reset"
+        id="reset-btn"
+        onClick={() => {
+          resetTest(false);
+          console.log("hey there");
+        }}
+      >
+        Reset
+      </button>
+    </>
   );
 }
 /** 
